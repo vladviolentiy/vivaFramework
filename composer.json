@@ -1,0 +1,35 @@
+{
+    "name": "vladviolentiy/viva-framework",
+    "description": "Simple Web framework",
+    "type": "library",
+    "license": "Apache 2.0",
+    "minimum-stability": "beta",
+    "autoload": {
+        "psr-4": {
+            "VladViolentiy\\VivaFramework\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "VladViolentiy\\VivaFramework\\Tests": "tests"
+
+        }
+    },
+    "authors": [
+        {
+            "name": "vlad",
+            "email": "vladviolentiy@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "symfony/http-foundation": "^5.4",
+        "ext-mysqli": "*",
+        "ext-pdo": "*",
+        "ext-openssl": "*"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^1.10",
+        "phpunit/phpunit": "^10.1"
+    }
+}
