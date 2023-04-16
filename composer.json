@@ -3,7 +3,7 @@
     "version": "0.1",
     "description": "Simple Web framework",
     "type": "library",
-    "license": "Apache 2.0",
+    "license": "Apache-2.0",
     "minimum-stability": "beta",
     "autoload": {
         "psr-4": {
