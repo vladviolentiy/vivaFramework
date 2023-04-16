@@ -1,6 +1,6 @@
 {
     "name": "vladviolentiy/viva-framework",
-    "version": "0.1",
+    "version": "0.1.2",
     "description": "Simple Web framework",
     "type": "library",
     "license": "Apache-2.0",
