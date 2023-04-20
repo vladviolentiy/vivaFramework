@@ -21,11 +21,11 @@ abstract class Validation
     }
 
     /** @phpstan-assert positive-int $item */
-    public function id(int $item):void{
+    public static function id(int $item):void{
         if($item<=0) throw new ValidationException();
     }
 
-    public function uuid(string $uuid,string $errorText = "Incorrect UUID value"):void{
+    public static function uuid(string $uuid,string $errorText = "Incorrect UUID value"):void{
         if(!preg_match('/^[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[1-8][0-9A-Fa-f]{3}-[ABab89][0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}$/',$uuid)) throw new ValidationException($errorText);
     }
 }
