@@ -9,7 +9,11 @@ abstract class Mysqli
     private \mysqli $db;
 
 
-    final protected function setDb(string $masterIp, string $login, string $password, string $database): void{
+    final protected function setDb(\mysqli $db): void{
+        $this->db = $db;
+    }
+
+    final protected function openConnection(string $masterIp, string $login, string $password, string $database): void{
         $this->db = new \mysqli($masterIp,$login,$password,$database);
         if($this->db->errno!==0) throw new DatabaseException();
     }

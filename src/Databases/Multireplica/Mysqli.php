@@ -12,6 +12,9 @@ abstract class Mysqli
     protected array $masterInfo;
     private \mysqli $db;
 
+    private bool $isMaster = false;
+
+
     /**
      * @param non-empty-string $masterIp
      * @param non-empty-string[] $slaveIps
@@ -32,7 +35,6 @@ abstract class Mysqli
         $this->db = new \mysqli($server,$login,$password,$database);
     }
 
-    private bool $isMaster = false;
 
     /**
      * @param non-empty-string $query
