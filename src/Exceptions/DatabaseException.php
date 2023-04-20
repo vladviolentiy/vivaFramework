@@ -6,7 +6,7 @@ use Throwable;
 
 class DatabaseException extends \Exception
 {
-    public function __construct(string $message = "", int $code = 1, ?Throwable $previous = null)
+    public function __construct(string $message = "Database exception", int $code = 1, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }
