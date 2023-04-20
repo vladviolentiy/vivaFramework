@@ -21,8 +21,8 @@ abstract class Validation
     }
 
     /** @phpstan-assert positive-int $item */
-    public static function id(int $item):void{
-        if($item<=0) throw new ValidationException();
+    public static function id(int $item,string $errorText = "Incorrect id"):void{
+        if($item<=0) throw new ValidationException($errorText);
     }
 
     public static function uuid(string $uuid,string $errorText = "Incorrect UUID value"):void{
