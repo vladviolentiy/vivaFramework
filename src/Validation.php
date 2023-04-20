@@ -6,8 +6,8 @@ use VladViolentiy\VivaFramework\Exceptions\ValidationException;
 
 abstract class Validation
 {
-    /** @phpstan-assert non-empty-string $hash */
-    public static function empty(string $value,string $errorText = "String is empty"):void{
+    /** @phpstan-assert non-empty-string $value */
+    public static function nonEmpty(string $value, string $errorText = "String is empty"):void{
         if($value==="") throw new ValidationException($errorText);
     }
 

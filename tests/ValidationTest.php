@@ -7,6 +7,10 @@ use VladViolentiy\VivaFramework\Validation;
 
 class ValidationTest extends TestCase
 {
+    public function emptyTest():void{
+        Validation::nonEmpty("123");
+        $this->assertTrue(true);
+    }
     public function testEmail():void{
         Validation::email("a@a.com");
         $this->assertTrue(true);
