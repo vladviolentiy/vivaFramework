@@ -2,9 +2,10 @@
 
 namespace VladViolentiy\VivaFramework\Databases;
 
+use VladViolentiy\VivaFramework\Databases\Interfaces\MigrationInterface;
 use VladViolentiy\VivaFramework\Exceptions\DatabaseException;
 
-abstract class Mysqli
+abstract class Mysqli extends DatabaseAbstract
 {
     private \mysqli $db;
 
@@ -40,7 +41,7 @@ abstract class Mysqli
      * @param array<int,string|int|float|null> $params
      * @throws DatabaseException
      */
-    final protected function executeQueryBool(string $query, string $types, array $params):void{
+    protected function executeQueryBool(string $query, string $types, array $params):void{
         $prepare = $this->prepare($query);
         $prepare->bind_param($types,...$params);
         if($prepare->execute()===false) throw new DatabaseException();
@@ -51,6 +52,14 @@ abstract class Mysqli
         if($prepare->execute()===false) throw new DatabaseException();
     }
 
+    final protected function executeQueryRaw(string $query):\mysqli_result{
+        $prepare = $this->prepare($query);
+        if($prepare->execute()===false) throw new DatabaseException();
+        $result = $prepare->get_result();
+        if($result===false) throw new DatabaseException();
+        return $result;
+    }
+
     final protected function prepare(string $query):\mysqli_stmt{
         $pdo = $this->db->prepare($query);
         if($pdo===false) throw new DatabaseException();
@@ -59,5 +68,17 @@ abstract class Mysqli
 
     final protected function insertId():int{
         return (int)$this->db->insert_id;
+    }
+
+    /**
+     * @param class-string[] $list
+     * @return void
+     */
+    public function takeMigration(array $list):void{
+        foreach ($list as $migration) {
+            /** @var MigrationInterface $item */
+            $item = new $migration($this->db);
+            $item->init();
+        }
     }
 }
