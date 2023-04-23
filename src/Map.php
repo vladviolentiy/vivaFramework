@@ -13,4 +13,12 @@ abstract class Map
         }
         return $i;
     }
+
+    public static function paramValue(array $data,string $param,string $value):array{
+        $i = [];
+        foreach ($data as $item) {
+            $i[$item[$param]] = $item[$value];
+        }
+        return $i;
+    }
 }

@@ -27,4 +27,21 @@ class MapTest extends TestCase
             ]
         ],Map::valueAsKey($info,"id"));
     }
+
+    public function testParamValue():void{
+        $info = [
+            [
+                "id"=>1,
+                "text"=>"test1"
+            ],
+            [
+                "id"=>2,
+                "text"=>"test2"
+            ]
+        ];
+        $this->assertEquals([
+            1=>"test1",
+            2=>"test2",
+        ],Map::paramValue($info,"id","text"));
+    }
 }
