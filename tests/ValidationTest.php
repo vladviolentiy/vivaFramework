@@ -3,13 +3,14 @@
 namespace VladViolentiy\VivaFramework\Tests;
 
 use PHPUnit\Framework\TestCase;
+use VladViolentiy\VivaFramework\Exceptions\ValidationException;
 use VladViolentiy\VivaFramework\Validation;
 
 class ValidationTest extends TestCase
 {
-    public function emptyTest():void{
-        Validation::nonEmpty("123");
-        $this->assertTrue(true);
+    public function testEmpty():void{
+        $this->expectException(ValidationException::class);
+        Validation::nonEmpty("");
     }
     public function testEmail():void{
         Validation::email("a@a.com");
