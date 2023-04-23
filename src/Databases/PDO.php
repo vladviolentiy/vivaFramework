@@ -2,9 +2,10 @@
 
 namespace VladViolentiy\VivaFramework\Databases;
 
+use VladViolentiy\VivaFramework\Databases\Interfaces\MigrationInterface;
 use VladViolentiy\VivaFramework\Exceptions\DatabaseException;
 
-abstract class PDO
+abstract class PDO extends DatabaseAbstract
 {
     private \PDO $db;
 
@@ -12,7 +13,7 @@ abstract class PDO
      * @param string $types
      * @return int
      */
-    public function getType(string $types): int
+    private function getType(string $types): int
     {
         return match ($types) {
             'i' => \PDO::PARAM_INT,
@@ -20,9 +21,14 @@ abstract class PDO
         };
     }
 
-    protected function setDb(\PDO $db): void
+    final protected function setDb(\PDO $db): void
     {
         $this->db = $db;
+    }
+
+    final protected function openConnection(string $dsn, string $login, string $password): void
+    {
+        $this->db = new \PDO($dsn, $login, $password);
     }
 
     /**
@@ -70,5 +76,19 @@ abstract class PDO
         $pdo = $this->db->prepare($query);
         if ($pdo === false) throw new DatabaseException();
         return $pdo;
+    }
+
+    final protected function insertId(): int
+    {
+        return (int)$this->db->lastInsertId();
+    }
+
+    public function takeMigration(array $list): void
+    {
+        foreach ($list as $migration) {
+            /** @var MigrationInterface $item */
+            $item = new $migration($this->db);
+            $item->init();
+        }
     }
 }
