@@ -44,4 +44,16 @@ class MapTest extends TestCase
             2=>"test2",
         ],Map::paramValue($info,"id","text"));
     }
+
+    public function testSingleValue():void{
+        $info = [
+            [
+                "id"=>1,
+            ],
+            [
+                "id"=>2,
+            ]
+        ];
+        $this->assertEquals([1,2],Map::singleValue($info,"id"));
+    }
 }
