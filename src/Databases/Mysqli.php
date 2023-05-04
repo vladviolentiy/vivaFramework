@@ -22,29 +22,24 @@ abstract class Mysqli extends DatabaseAbstract
     /**
      * @param string $query
      * @param string $types
-     * @param array<int,string|int|float|null> $params
+     * @param list<string|int|float|null> $params
      * @return \mysqli_result<int,string|int|float|null>
      * @throws DatabaseException
      */
     final protected function executeQuery(string $query, string $types, array $params):\mysqli_result{
         $prepare = $this->prepare($query);
-        $prepare->bind_param($types,...$params);
-        $prepare->execute();
-        $result = $prepare->get_result();
-        if($result===false) throw new DatabaseException();
-        return $result;
+        return $this->executePrepare($prepare,$types,$params);
     }
 
     /**
      * @param string $query
      * @param string $types
-     * @param array<int,string|int|float|null> $params
+     * @param list<string|int|float|null> $params
      * @throws DatabaseException
      */
     protected function executeQueryBool(string $query, string $types, array $params):void{
         $prepare = $this->prepare($query);
-        $prepare->bind_param($types,...$params);
-        if($prepare->execute()===false) throw new DatabaseException();
+        $this->executePrepareBool($prepare,$types,$params);
     }
 
     final protected function executeQueryBoolRaw(string $query):void{
@@ -64,6 +59,32 @@ abstract class Mysqli extends DatabaseAbstract
         $pdo = $this->db->prepare($query);
         if($pdo===false) throw new DatabaseException();
         return $pdo;
+    }
+
+    /**
+     * @param \mysqli_stmt $prepare
+     * @param string $types
+     * @param list<string|int|float|null> $params
+     * @return \mysqli_result
+     * @throws DatabaseException
+     */
+    final protected function executePrepare(\mysqli_stmt $prepare, string $types, array $params):\mysqli_result{
+        $prepare->bind_param($types,...$params);
+        if($prepare->execute()===false) throw new DatabaseException();
+        $result =  $prepare->get_result();
+        if($result===false) throw new DatabaseException();
+        return $result;
+    }
+
+    /**
+     * @param \mysqli_stmt $prepare
+     * @param string $types
+     * @param list<string|int|float|null> $params
+     * @return void
+     */
+    final protected function executePrepareBool(\mysqli_stmt $prepare, string $types, array $params):void{
+        $prepare->bind_param($types,...$params);
+        if($prepare->execute()===false) throw new DatabaseException();
     }
 
     final protected function insertId():int{

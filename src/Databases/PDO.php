@@ -41,12 +41,7 @@ abstract class PDO extends DatabaseAbstract
     final protected function executeQuery(string $query, string $types, array $params): \PDOStatement
     {
         $prepare = $this->prepare($query);
-        foreach ($params as $key => $param) {
-            $type = $this->getType($types[$key]);
-            $prepare->bindParam($key, $param, $type);
-        }
-        $prepare->execute();
-        return $prepare;
+        return $this->executePrepare($prepare,$types,$params);
     }
 
     /**
@@ -58,11 +53,7 @@ abstract class PDO extends DatabaseAbstract
     final protected function executeQueryBool(string $query, string $types, array $params): void
     {
         $prepare = $this->prepare($query);
-        foreach ($params as $key => $param) {
-            $type = $this->getType($types[$key]);
-            $prepare->bindParam($key, $param, $type);
-        }
-        if ($prepare->execute() === false) throw new DatabaseException();
+        $this->executePrepareBool($prepare,$types,$params);
     }
 
     final protected function executeQueryBoolRaw(string $query): void
@@ -76,6 +67,39 @@ abstract class PDO extends DatabaseAbstract
         $pdo = $this->db->prepare($query);
         if ($pdo === false) throw new DatabaseException();
         return $pdo;
+    }
+
+    /**
+     * @param \PDOStatement $prepare
+     * @param string $types
+     * @param list<string|int|float|null> $params
+     * @return \PDOStatement
+     * @throws DatabaseException
+     */
+    final protected function executePrepare(\PDOStatement $prepare, string $types, array $params):\PDOStatement
+    {
+        foreach ($params as $key => $param) {
+            $type = $this->getType($types[$key]);
+            $prepare->bindParam($key, $param, $type);
+        }
+        if ($prepare->execute() === false) throw new DatabaseException();
+        return $prepare;
+    }
+
+    /**
+     * @param \PDOStatement $prepare
+     * @param string $types
+     * @param list<string|int|float|null> $params
+     * @return void
+     * @throws DatabaseException
+     */
+    final protected function executePrepareBool(\PDOStatement $prepare, string $types, array $params):void
+    {
+        foreach ($params as $key => $param) {
+            $type = $this->getType($types[$key]);
+            $prepare->bindParam($key, $param, $type);
+        }
+        if ($prepare->execute() === false) throw new DatabaseException();
     }
 
     final protected function insertId(): int
