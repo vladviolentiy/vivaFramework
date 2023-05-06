@@ -6,7 +6,7 @@ abstract class Map
 {
     /**
      * @param list<array<string,int|string|float>> $data
-     * @param string $value
+     * @param non-empty-string $value
      * @return array<int|string,array<string,int|string|float>>
      */
     public static function valueAsKey(array $data, string $value):array{
@@ -21,7 +21,7 @@ abstract class Map
 
     /**
      * @param list<array<string,string|int|float>> $data
-     * @param string $value
+     * @param non-empty-string $value
      * @return list<string|int|float>
      */
     public static function singleValue(array $data, string $value):array{
@@ -32,8 +32,8 @@ abstract class Map
 
     /**
      * @param list<array<string,string|int|float>> $data
-     * @param string $param
-     * @param string $value
+     * @param non-empty-string $param
+     * @param non-empty-string $value
      * @return array<int|string,string|int|float>
      */
     public static function paramValue(array $data, string $param, string $value):array{

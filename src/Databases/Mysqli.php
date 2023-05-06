@@ -14,6 +14,14 @@ abstract class Mysqli extends DatabaseAbstract
         $this->db = $db;
     }
 
+    /**
+     * @param non-empty-string $masterIp
+     * @param non-empty-string $login
+     * @param non-empty-string $password
+     * @param non-empty-string $database
+     * @return void
+     * @throws DatabaseException
+     */
     final protected function openConnection(string $masterIp, string $login, string $password, string $database): void{
         $this->db = new \mysqli($masterIp,$login,$password,$database);
         if($this->db->errno!==0) throw new DatabaseException();
@@ -22,7 +30,7 @@ abstract class Mysqli extends DatabaseAbstract
     /**
      * @param non-empty-string $query
      * @param non-empty-string $types
-     * @param list<string|int|float|null> $params
+     * @param non-empty-list<string|int|float|null> $params
      * @return \mysqli_result<int,string|int|float|null>
      * @throws DatabaseException
      */
@@ -34,7 +42,7 @@ abstract class Mysqli extends DatabaseAbstract
     /**
      * @param non-empty-string $query
      * @param non-empty-string $types
-     * @param list<string|int|float|null> $params
+     * @param non-empty-list<string|int|float|null> $params
      * @throws DatabaseException
      */
     protected function executeQueryBool(string $query, string $types, array $params):void{
@@ -65,6 +73,11 @@ abstract class Mysqli extends DatabaseAbstract
         return $result;
     }
 
+    /**
+     * @param non-empty-string $query
+     * @return \mysqli_stmt
+     * @throws DatabaseException
+     */
     final protected function prepare(string $query):\mysqli_stmt{
         $pdo = $this->db->prepare($query);
         if($pdo===false) throw new DatabaseException();
@@ -73,8 +86,8 @@ abstract class Mysqli extends DatabaseAbstract
 
     /**
      * @param \mysqli_stmt $prepare
-     * @param string $types
-     * @param list<string|int|float|null> $params
+     * @param non-empty-string $types
+     * @param non-empty-list<string|int|float|null> $params
      * @return \mysqli_result
      * @throws DatabaseException
      */
@@ -88,9 +101,10 @@ abstract class Mysqli extends DatabaseAbstract
 
     /**
      * @param \mysqli_stmt $prepare
-     * @param string $types
-     * @param list<string|int|float|null> $params
+     * @param non-empty-string $types
+     * @param non-empty-list<string|int|float|null> $params
      * @return void
+     * @throws DatabaseException
      */
     final protected function executePrepareBool(\mysqli_stmt $prepare, string $types, array $params):void{
         $prepare->bind_param($types,...$params);
