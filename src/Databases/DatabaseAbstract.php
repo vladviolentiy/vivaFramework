@@ -4,12 +4,16 @@ namespace VladViolentiy\VivaFramework\Databases;
 
 abstract class DatabaseAbstract
 {
+    /**
+     * @param non-empty-string $query
+     * @return void
+     */
     abstract protected function executeQueryBoolRaw(string $query):void;
 
     /**
-     * @param string $query
-     * @param string $types
-     * @param array<int,string|int|float|null> $params
+     * @param non-empty-string $query
+     * @param non-empty-string $types
+     * @param non-empty-list<string|int|float|null> $params
      * @return void
      */
     abstract protected function executeQueryBool(string $query, string $types, array $params):void;
