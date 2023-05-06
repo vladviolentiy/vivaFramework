@@ -20,8 +20,8 @@ abstract class Mysqli extends DatabaseAbstract
     }
 
     /**
-     * @param string $query
-     * @param string $types
+     * @param non-empty-string $query
+     * @param non-empty-string $types
      * @param list<string|int|float|null> $params
      * @return \mysqli_result<int,string|int|float|null>
      * @throws DatabaseException
@@ -32,8 +32,8 @@ abstract class Mysqli extends DatabaseAbstract
     }
 
     /**
-     * @param string $query
-     * @param string $types
+     * @param non-empty-string $query
+     * @param non-empty-string $types
      * @param list<string|int|float|null> $params
      * @throws DatabaseException
      */
@@ -42,11 +42,21 @@ abstract class Mysqli extends DatabaseAbstract
         $this->executePrepareBool($prepare,$types,$params);
     }
 
-    final protected function executeQueryBoolRaw(string $query):void{
+    /**
+     * @param non-empty-string $query
+     * @return void
+     * @throws DatabaseException
+     */
+    protected function executeQueryBoolRaw(string $query):void{
         $prepare = $this->prepare($query);
         if($prepare->execute()===false) throw new DatabaseException();
     }
 
+    /**
+     * @param non-empty-string $query
+     * @return \mysqli_result
+     * @throws DatabaseException
+     */
     final protected function executeQueryRaw(string $query):\mysqli_result{
         $prepare = $this->prepare($query);
         if($prepare->execute()===false) throw new DatabaseException();
