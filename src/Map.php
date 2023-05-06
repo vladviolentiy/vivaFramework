@@ -4,6 +4,11 @@ namespace VladViolentiy\VivaFramework;
 
 abstract class Map
 {
+    /**
+     * @param list<array<string,int|string|float>> $data
+     * @param string $value
+     * @return array<int|string,array<string,int|string|float>>
+     */
     public static function valueAsKey(array $data, string $value):array{
         $i = [];
         foreach ($data as $item) {
@@ -14,13 +19,24 @@ abstract class Map
         return $i;
     }
 
+    /**
+     * @param list<array<string,string|int|float>> $data
+     * @param string $value
+     * @return list<string|int|float>
+     */
     public static function singleValue(array $data, string $value):array{
         return array_map(function($item) use ($value){
             return $item[$value];
         },$data);
     }
 
-    public static function paramValue(array $data,string $param,string $value):array{
+    /**
+     * @param list<array<string,string|int|float>> $data
+     * @param string $param
+     * @param string $value
+     * @return array<int|string,string|int|float>
+     */
+    public static function paramValue(array $data, string $param, string $value):array{
         $i = [];
         foreach ($data as $item) {
             $i[$item[$param]] = $item[$value];
