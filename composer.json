@@ -22,9 +22,7 @@
     ],
     "require": {
         "php": "^8.1",
-        "symfony/http-foundation": "^5.4 || ^6.0",
-        "ext-mysqli": "*",
-        "ext-pdo": "*",
+        "symfony/http-foundation": "^5.4.0 || ^6.2.0",
         "ext-openssl": "*"
     },
     "require-dev": {
