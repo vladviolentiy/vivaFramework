@@ -8,7 +8,7 @@ use VladViolentiy\VivaFramework\Exceptions\DatabaseException;
 abstract class MysqliMultiReplica extends \VladViolentiy\VivaFramework\Databases\Mysqli
 {
     /**
-     * @var array{server:string,login:string,password:string,database:string}
+     * @var array{server:non-empty-string,login:non-empty-string,password:non-empty-string,database:non-empty-string}
      */
     protected array $masterInfo;
 
@@ -34,14 +34,7 @@ abstract class MysqliMultiReplica extends \VladViolentiy\VivaFramework\Databases
         $this->setDb(new mysqli($server,$login,$password,$database));
     }
 
-    /**
-     * @param non-empty-string $query
-     * @param non-empty-string $types
-     * @param non-empty-list<string|int|float> $params
-     * @return void
-     * @throws DatabaseException
-     */
-    protected function executeQueryBool(string $query, string $types, array $params):void{
+    private function initMaster():void{
         if(!$this->isMaster){
             $this->setDb(new mysqli(
                 $this->masterInfo['server'],
@@ -52,8 +45,27 @@ abstract class MysqliMultiReplica extends \VladViolentiy\VivaFramework\Databases
 
             $this->isMaster = true;
         }
-        $prepare = $this->prepare($query);
-        $prepare->bind_param($types,...$params);
-        if($prepare->execute()===false) throw new DatabaseException();
+    }
+
+    /**
+     * @param non-empty-string $query
+     * @param non-empty-string $types
+     * @param non-empty-list<string|int|float> $params
+     * @return void
+     * @throws DatabaseException
+     */
+    protected function executeQueryBool(string $query, string $types, array $params):void{
+        $this->initMaster();
+        parent::executeQueryBool($query,$types,$params);
+    }
+
+    /**
+     * @param non-empty-string $query
+     * @return void
+     * @throws DatabaseException
+     */
+    protected function executeQueryBoolRaw(string $query):void{
+        $this->initMaster();
+        parent::executeQueryBoolRaw($query);
     }
 }
