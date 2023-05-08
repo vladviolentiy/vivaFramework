@@ -68,4 +68,9 @@ abstract class MysqliMultiReplica extends \VladViolentiy\VivaFramework\Databases
         $this->initMaster();
         parent::executeQueryBoolRaw($query);
     }
+
+    public function beginTransaction():void{
+        $this->initMaster();
+        parent::beginTransaction();
+    }
 }

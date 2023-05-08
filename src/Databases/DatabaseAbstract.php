@@ -24,4 +24,7 @@ abstract class DatabaseAbstract
     abstract public function takeMigration(array $list):void;
 
     abstract protected function insertId():int;
+
+    abstract public function beginTransaction():void;
+    abstract public function commit():void;
 }

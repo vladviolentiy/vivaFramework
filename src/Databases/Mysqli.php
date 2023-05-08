@@ -39,22 +39,13 @@ abstract class Mysqli extends DatabaseAbstract
         return $this->executePrepare($prepare,$types,$params);
     }
 
-    /**
-     * @param non-empty-string $query
-     * @param non-empty-string $types
-     * @param non-empty-list<string|int|float|null> $params
-     * @throws DatabaseException
-     */
+
     protected function executeQueryBool(string $query, string $types, array $params):void{
         $prepare = $this->prepare($query);
         $this->executePrepareBool($prepare,$types,$params);
     }
 
-    /**
-     * @param non-empty-string $query
-     * @return void
-     * @throws DatabaseException
-     */
+
     protected function executeQueryBoolRaw(string $query):void{
         $prepare = $this->prepare($query);
         if($prepare->execute()===false) throw new DatabaseException();
@@ -125,5 +116,14 @@ abstract class Mysqli extends DatabaseAbstract
             $item = new $migration($this->db);
             $item->init();
         }
+    }
+
+    public function beginTransaction():void{
+        $this->db->autocommit(false);
+        $this->db->begin_transaction();
+    }
+
+    public function commit():void{
+        $this->db->commit();
     }
 }

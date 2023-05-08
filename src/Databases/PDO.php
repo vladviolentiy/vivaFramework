@@ -115,4 +115,13 @@ abstract class PDO extends DatabaseAbstract
             $item->init();
         }
     }
+
+    public function beginTransaction():void{
+        $this->db->setAttribute(\PDO::ATTR_AUTOCOMMIT,0);
+        $this->db->beginTransaction();
+    }
+
+    public function commit():void{
+        $this->db->commit();
+    }
 }

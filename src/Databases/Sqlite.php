@@ -106,4 +106,12 @@ abstract class Sqlite extends DatabaseAbstract
     final protected function insertId():int{
         return $this->db->lastInsertRowID();
     }
+
+    public function beginTransaction():void{
+
+    }
+
+    public function commit():void{
+
+    }
 }
