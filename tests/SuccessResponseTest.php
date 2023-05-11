@@ -27,4 +27,10 @@ class SuccessResponseTest extends TestCase
             "text"=>"test"
         ],SuccessResponse::text($info));
     }
+
+    public function testNullResponse():void{
+        $this->assertEquals([
+            "success"=>true,
+        ],SuccessResponse::null());
+    }
 }

@@ -6,7 +6,7 @@ abstract class SuccessResponse
 {
     /**
      * @param array<mixed> $data
-     * @return array{success:bool,data:mixed}
+     * @return array{success:true,data:array<mixed>}
      */
     public static function data(array $data):array{
         return [
@@ -17,12 +17,21 @@ abstract class SuccessResponse
 
     /**
      * @param string $text
-     * @return array{success:bool,text:string}
+     * @return array{success:true,text:string}
      */
     public static function text(string $text):array{
         return [
             "success"=>true,
             "text"=>$text
+        ];
+    }
+
+    /**
+     * @return array{success:true}
+     */
+    public static function null():array{
+        return [
+            "success"=>true,
         ];
     }
 }
