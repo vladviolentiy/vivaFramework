@@ -3,7 +3,7 @@
     "description": "Simple Web framework",
     "type": "library",
     "license": "Apache-2.0",
-    "minimum-stability": "beta",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "VladViolentiy\\VivaFramework\\": "src/"
@@ -22,7 +22,7 @@
     ],
     "require": {
         "php": "^8.1",
-        "symfony/http-foundation": "^5.4.0 || ^6.2.0",
+        "symfony/http-foundation": "^5.4.23 || ^6.2.10",
         "ext-openssl": "*"
     },
     "require-dev": {
