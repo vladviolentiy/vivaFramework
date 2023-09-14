@@ -43,4 +43,16 @@ abstract class Map
         }
         return $i;
     }
+
+    /**
+     * @param list<array<string,string|int|float>> $data
+     * @param non-empty-string $param
+     * @return list<array<string,string|int|float|bool>>
+     */
+    public static function toBoolValue(array $data, string $param):array{
+        return array_map(function ($item) use ($param){
+            $item[$param] = (bool)$item[$param];
+            return $item;
+        },$data);
+    }
 }
