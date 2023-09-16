@@ -2,7 +2,7 @@
 
 namespace VladViolentiy\VivaFramework;
 
-use Symfony\Component\HttpFoundation\FileBag;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
 class Req
@@ -36,10 +36,10 @@ class Req
 
     /**
      * @param non-empty-string $key
-     * @return FileBag|null
+     * @return UploadedFile|null
      */
-    public function getFile(string $key):?FileBag{
-        /** @var FileBag|null $file */
+    public function getFile(string $key):?UploadedFile{
+        /** @var UploadedFile|null $file */
         $file = $this->request->files->get($key);
         return $file;
     }
