@@ -56,4 +56,23 @@ class MapTest extends TestCase
         ];
         $this->assertEquals([1,2],Map::singleValue($info,"id"));
     }
+
+    public function testToBoolValue():void{
+        $info = [
+            [
+                "id"=>1,
+            ],
+            [
+                "id"=>0,
+            ]
+        ];
+        $this->assertEquals([
+            [
+                "id"=>true,
+            ],
+            [
+                "id"=>false,
+            ]
+        ],Map::toBoolValue($info,"id"));
+    }
 }
