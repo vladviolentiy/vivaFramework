@@ -20,6 +20,10 @@
             "email": "vladviolentiy@gmail.com"
         }
     ],
+    "scripts": {
+        "test": "phpunit",
+        "phpstan": "phpstan"
+    },
     "require": {
         "php": "^8.1",
         "symfony/http-foundation": "^5.4.23 || ^6.2.10",
