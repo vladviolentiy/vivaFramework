@@ -5,7 +5,6 @@ namespace VladViolentiy\VivaFramework\Tests;
 use PHPUnit\Framework\TestCase;
 use VladViolentiy\VivaFramework\JSON;
 use VladViolentiy\VivaFramework\Tests\Models\PostItem;
-use VladViolentiy\VivaFramework\Tests\Models\UserList;
 use VladViolentiy\VivaFramework\Tests\Models\UserItem;
 
 class JSONTest extends TestCase
