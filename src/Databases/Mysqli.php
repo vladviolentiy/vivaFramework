@@ -3,7 +3,9 @@
 namespace VladViolentiy\VivaFramework\Databases;
 
 use VladViolentiy\VivaFramework\Databases\Interfaces\MigrationInterface;
+use VladViolentiy\VivaFramework\Databases\Migrations\MysqliMigration;
 use VladViolentiy\VivaFramework\Exceptions\DatabaseException;
+use VladViolentiy\VivaFramework\Exceptions\MigrationException;
 
 abstract class Mysqli extends DatabaseAbstract
 {
@@ -125,5 +127,24 @@ abstract class Mysqli extends DatabaseAbstract
 
     public function commit():void{
         $this->db->commit();
+    }
+
+    /**
+     * @param \mysqli $dbConn
+     * @param class-string[] $classList
+     * @return void
+     * @throws MigrationException
+     */
+    public static function checkMigration(\mysqli $dbConn, array $classList):void{
+        $info = new MysqliMigration($dbConn);
+        $last = $info->getLastMigration();
+        foreach ($classList as $item) {
+            if($last<$item){
+                /** @var MigrationInterface $migrationObject */
+                $migrationObject = new $item($dbConn);
+                $migrationObject->init();
+            }
+            $info->setCurrentMigration($item);
+        }
     }
 }
