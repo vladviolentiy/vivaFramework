@@ -4,7 +4,10 @@ namespace VladViolentiy\VivaFramework\Databases;
 
 use PDOStatement;
 use VladViolentiy\VivaFramework\Databases\Interfaces\MigrationInterface;
+use VladViolentiy\VivaFramework\Databases\Migrations\PdoMigration;
+use VladViolentiy\VivaFramework\Databases\Migrations\SqliteMigration;
 use VladViolentiy\VivaFramework\Exceptions\DatabaseException;
+use VladViolentiy\VivaFramework\Exceptions\MigrationException;
 
 abstract class PDO extends DatabaseAbstract
 {
@@ -111,6 +114,10 @@ abstract class PDO extends DatabaseAbstract
         return (int)$this->db->lastInsertId();
     }
 
+    /**
+     * @param class-string[] $list
+     * @return void
+     */
     public function takeMigration(array $list): void
     {
         foreach ($list as $migration) {
@@ -127,5 +134,16 @@ abstract class PDO extends DatabaseAbstract
 
     public function commit():void{
         $this->db->commit();
+    }
+
+    /**
+     * @param PdoMigration $object
+     * @param class-string[] $classes
+     * @return void
+     * @throws DatabaseException
+     * @throws MigrationException
+     */
+    public static function checkMigration(PdoMigration $object, array $classes):void{
+        self::migrator($object,$classes);
     }
 }

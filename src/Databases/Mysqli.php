@@ -130,21 +130,13 @@ abstract class Mysqli extends DatabaseAbstract
     }
 
     /**
-     * @param \mysqli $dbConn
-     * @param class-string[] $classList
+     * @param MysqliMigration $object
+     * @param class-string[] $classes
      * @return void
+     * @throws DatabaseException
      * @throws MigrationException
      */
-    public static function checkMigration(\mysqli $dbConn, array $classList):void{
-        $info = new MysqliMigration($dbConn);
-        $last = $info->getLastMigration();
-        foreach ($classList as $item) {
-            if($last<$item){
-                /** @var MigrationInterface $migrationObject */
-                $migrationObject = new $item($dbConn);
-                $migrationObject->init();
-            }
-            $info->setCurrentMigration($item);
-        }
+    public static function checkMigration(MysqliMigration $object, array $classes):void{
+        self::migrator($object,$classes);
     }
 }

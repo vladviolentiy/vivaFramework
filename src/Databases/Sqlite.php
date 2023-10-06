@@ -2,7 +2,10 @@
 
 namespace VladViolentiy\VivaFramework\Databases;
 
+use VladViolentiy\VivaFramework\Databases\Migrations\MysqliMigration;
+use VladViolentiy\VivaFramework\Databases\Migrations\SqliteMigration;
 use VladViolentiy\VivaFramework\Exceptions\DatabaseException;
+use VladViolentiy\VivaFramework\Exceptions\MigrationException;
 
 abstract class Sqlite extends DatabaseAbstract
 {
@@ -107,11 +110,18 @@ abstract class Sqlite extends DatabaseAbstract
         return $this->db->lastInsertRowID();
     }
 
-    public function beginTransaction():void{
+    public function beginTransaction():void{}
 
-    }
+    public function commit():void{}
 
-    public function commit():void{
-
+    /**
+     * @param SqliteMigration $object
+     * @param class-string[] $classes
+     * @return void
+     * @throws DatabaseException
+     * @throws MigrationException
+     */
+    public static function checkMigration(SqliteMigration $object, array $classes):void{
+        self::migrator($object,$classes);
     }
 }

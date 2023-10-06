@@ -3,28 +3,26 @@
 namespace VladViolentiy\VivaFramework\Databases\Migrations;
 
 use VladViolentiy\VivaFramework\Databases\Mysqli;
-use VladViolentiy\VivaFramework\Exceptions\DatabaseException;
+use VladViolentiy\VivaFramework\Databases\Sqlite;
 use VladViolentiy\VivaFramework\Exceptions\MigrationException;
 
-class MysqliMigration extends Mysqli implements MigrationsClassInterface
+class SqliteMigration extends Sqlite implements MigrationsClassInterface
 {
-    public function __construct(\mysqli $mysqli)
+    public function getLastMigration(): string
     {
-        $this->setDb($mysqli);
-    }
-
-    public function getLastMigration():string{
         /** @var array{current:class-string}|null $i */
-        $i = $this->executeQueryRaw("SELECT current FROM migration ")->fetch_array(MYSQLI_ASSOC);
+        $i = $this->executeQueryRaw("SELECT current FROM migration")->fetchArray(SQLITE3_ASSOC);
         if($i===null) throw new MigrationException();
         return $i['current'];
     }
 
-    public function setCurrentMigration(string $current):void{
+    public function setCurrentMigration(string $current): void
+    {
         $this->executeQueryBool("UPDATE migration set current=?","s",[$current]);
     }
 
-    public function query(string $query):void{
+    public function query(string $query): void
+    {
         $this->executeQueryBoolRaw($query);
     }
 }
