@@ -50,7 +50,7 @@ abstract class MysqliMultiReplica extends \VladViolentiy\VivaFramework\Databases
     /**
      * @param non-empty-string $query
      * @param non-empty-string $types
-     * @param non-empty-list<string|int|float> $params
+     * @param non-empty-list<string|int|float|null> $params
      * @return void
      * @throws DatabaseException
      */
