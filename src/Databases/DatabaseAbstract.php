@@ -42,8 +42,9 @@ abstract class DatabaseAbstract
                 /** @var MigrationInterface $migrationObject */
                 $migrationObject = new $item($info);
                 $migrationObject->init();
+                $info->setCurrentMigration($item);
+
             }
-            $info->setCurrentMigration($item);
         }
     }
 }
