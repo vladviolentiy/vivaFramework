@@ -3,7 +3,6 @@
 namespace VladViolentiy\VivaFramework\Databases\Migrations;
 
 use VladViolentiy\VivaFramework\Databases\Mysqli;
-use VladViolentiy\VivaFramework\Exceptions\DatabaseException;
 use VladViolentiy\VivaFramework\Exceptions\MigrationException;
 
 class MysqliMigration extends Mysqli implements MigrationsClassInterface
