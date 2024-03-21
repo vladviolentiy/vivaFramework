@@ -129,6 +129,10 @@ abstract class Mysqli extends DatabaseAbstract
         $this->db->commit();
     }
 
+    public function rollback():void{
+        $this->db->rollback();
+    }
+
     /**
      * @param MysqliMigration $object
      * @param class-string[] $classes

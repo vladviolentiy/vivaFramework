@@ -136,6 +136,10 @@ abstract class PDO extends DatabaseAbstract
         $this->db->commit();
     }
 
+    public function rollback():void{
+        $this->db->rollBack();
+    }
+
     /**
      * @param PdoMigration $object
      * @param class-string[] $classes
