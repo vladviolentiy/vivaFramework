@@ -41,10 +41,16 @@ abstract class DatabaseAbstract
             if($last<$item){
                 /** @var MigrationInterface $migrationObject */
                 $migrationObject = new $item($info);
-                $migrationObject->init();
-                $info->setCurrentMigration($item);
-
+                try {
+                    $info->query("START TRANSACTION");
+                    $migrationObject->init();
+                    $info->setCurrentMigration($item);
+                    $info->query("COMMIT");
+                } catch (\Exception $e) {
+                    $info->query("ROLLBACK");
+                }
             }
         }
+
     }
 }
