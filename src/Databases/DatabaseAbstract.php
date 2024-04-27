@@ -49,6 +49,7 @@ abstract class DatabaseAbstract
                     $info->query("COMMIT");
                 } catch (\Exception $e) {
                     $info->query("ROLLBACK");
+                    throw new MigrationException();
                 }
             }
         }
