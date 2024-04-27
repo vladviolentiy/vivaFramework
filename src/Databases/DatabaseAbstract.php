@@ -27,6 +27,7 @@ abstract class DatabaseAbstract
 
     abstract public function beginTransaction():void;
     abstract public function commit():void;
+    abstract public function rollback():void;
 
     /**
      * @param MigrationsClassInterface $info

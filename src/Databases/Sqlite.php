@@ -2,7 +2,6 @@
 
 namespace VladViolentiy\VivaFramework\Databases;
 
-use VladViolentiy\VivaFramework\Databases\Migrations\MysqliMigration;
 use VladViolentiy\VivaFramework\Databases\Migrations\SqliteMigration;
 use VladViolentiy\VivaFramework\Exceptions\DatabaseException;
 use VladViolentiy\VivaFramework\Exceptions\MigrationException;
@@ -113,6 +112,8 @@ abstract class Sqlite extends DatabaseAbstract
     public function beginTransaction():void{}
 
     public function commit():void{}
+
+    public function rollback():void{}
 
     /**
      * @param SqliteMigration $object
