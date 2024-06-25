@@ -20,4 +20,8 @@ interface MigrationsClassInterface
      * @return void
      */
     public function query(string $query): void;
+
+    public function checkIssetMigrationTable(): bool;
+
+    public function createMigrationTable(): void;
 }

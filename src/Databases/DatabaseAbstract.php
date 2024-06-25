@@ -38,6 +38,9 @@ abstract class DatabaseAbstract
      */
     protected static function migrator(MigrationsClassInterface $info, array $classList): void
     {
+        if(!$info->checkIssetMigrationTable()) {
+            $info->createMigrationTable();
+        }
         $last = $info->getLastMigration();
         foreach ($classList as $item) {
             if($last < $item) {
