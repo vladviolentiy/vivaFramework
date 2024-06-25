@@ -12,7 +12,8 @@ abstract class Mysqli extends DatabaseAbstract
     private \mysqli $db;
 
 
-    final protected function setDb(\mysqli $db): void{
+    final protected function setDb(\mysqli $db): void
+    {
         $this->db = $db;
     }
 
@@ -24,9 +25,12 @@ abstract class Mysqli extends DatabaseAbstract
      * @return void
      * @throws DatabaseException
      */
-    final protected function openConnection(string $masterIp, string $login, string $password, string $database): void{
-        $this->db = new \mysqli($masterIp,$login,$password,$database);
-        if($this->db->errno!==0) throw new DatabaseException();
+    final protected function openConnection(string $masterIp, string $login, string $password, string $database): void
+    {
+        $this->db = new \mysqli($masterIp, $login, $password, $database);
+        if($this->db->errno !== 0) {
+            throw new DatabaseException();
+        }
     }
 
     /**
@@ -36,21 +40,26 @@ abstract class Mysqli extends DatabaseAbstract
      * @return \mysqli_result<int,string|int|float|null>
      * @throws DatabaseException
      */
-    final protected function executeQuery(string $query, string $types, array $params):\mysqli_result{
+    final protected function executeQuery(string $query, string $types, array $params): \mysqli_result
+    {
         $prepare = $this->prepare($query);
-        return $this->executePrepare($prepare,$types,$params);
+        return $this->executePrepare($prepare, $types, $params);
     }
 
 
-    protected function executeQueryBool(string $query, string $types, array $params):void{
+    protected function executeQueryBool(string $query, string $types, array $params): void
+    {
         $prepare = $this->prepare($query);
-        $this->executePrepareBool($prepare,$types,$params);
+        $this->executePrepareBool($prepare, $types, $params);
     }
 
 
-    protected function executeQueryBoolRaw(string $query):void{
+    protected function executeQueryBoolRaw(string $query): void
+    {
         $prepare = $this->prepare($query);
-        if($prepare->execute()===false) throw new DatabaseException();
+        if($prepare->execute() === false) {
+            throw new DatabaseException();
+        }
     }
 
     /**
@@ -58,11 +67,16 @@ abstract class Mysqli extends DatabaseAbstract
      * @return \mysqli_result
      * @throws DatabaseException
      */
-    final protected function executeQueryRaw(string $query):\mysqli_result{
+    final protected function executeQueryRaw(string $query): \mysqli_result
+    {
         $prepare = $this->prepare($query);
-        if($prepare->execute()===false) throw new DatabaseException();
+        if($prepare->execute() === false) {
+            throw new DatabaseException();
+        }
         $result = $prepare->get_result();
-        if($result===false) throw new DatabaseException();
+        if($result === false) {
+            throw new DatabaseException();
+        }
         return $result;
     }
 
@@ -71,9 +85,12 @@ abstract class Mysqli extends DatabaseAbstract
      * @return \mysqli_stmt
      * @throws DatabaseException
      */
-    final protected function prepare(string $query):\mysqli_stmt{
+    final protected function prepare(string $query): \mysqli_stmt
+    {
         $pdo = $this->db->prepare($query);
-        if($pdo===false) throw new DatabaseException();
+        if($pdo === false) {
+            throw new DatabaseException();
+        }
         return $pdo;
     }
 
@@ -84,11 +101,16 @@ abstract class Mysqli extends DatabaseAbstract
      * @return \mysqli_result
      * @throws DatabaseException
      */
-    final protected function executePrepare(\mysqli_stmt $prepare, string $types, array $params):\mysqli_result{
-        $prepare->bind_param($types,...$params);
-        if($prepare->execute()===false) throw new DatabaseException();
+    final protected function executePrepare(\mysqli_stmt $prepare, string $types, array $params): \mysqli_result
+    {
+        $prepare->bind_param($types, ...$params);
+        if($prepare->execute() === false) {
+            throw new DatabaseException();
+        }
         $result =  $prepare->get_result();
-        if($result===false) throw new DatabaseException();
+        if($result === false) {
+            throw new DatabaseException();
+        }
         return $result;
     }
 
@@ -99,12 +121,16 @@ abstract class Mysqli extends DatabaseAbstract
      * @return void
      * @throws DatabaseException
      */
-    final protected function executePrepareBool(\mysqli_stmt $prepare, string $types, array $params):void{
-        $prepare->bind_param($types,...$params);
-        if($prepare->execute()===false) throw new DatabaseException();
+    final protected function executePrepareBool(\mysqli_stmt $prepare, string $types, array $params): void
+    {
+        $prepare->bind_param($types, ...$params);
+        if($prepare->execute() === false) {
+            throw new DatabaseException();
+        }
     }
 
-    final protected function insertId():int{
+    final protected function insertId(): int
+    {
         return (int)$this->db->insert_id;
     }
 
@@ -112,7 +138,8 @@ abstract class Mysqli extends DatabaseAbstract
      * @param class-string[] $list
      * @return void
      */
-    public function takeMigration(array $list):void{
+    public function takeMigration(array $list): void
+    {
         foreach ($list as $migration) {
             /** @var MigrationInterface $item */
             $item = new $migration($this->db);
@@ -120,16 +147,19 @@ abstract class Mysqli extends DatabaseAbstract
         }
     }
 
-    public function beginTransaction():void{
+    public function beginTransaction(): void
+    {
         $this->db->autocommit(false);
         $this->db->begin_transaction();
     }
 
-    public function commit():void{
+    public function commit(): void
+    {
         $this->db->commit();
     }
 
-    public function rollback():void{
+    public function rollback(): void
+    {
         $this->db->rollback();
     }
 
@@ -140,7 +170,8 @@ abstract class Mysqli extends DatabaseAbstract
      * @throws DatabaseException
      * @throws MigrationException
      */
-    public static function checkMigration(MysqliMigration $object, array $classes):void{
-        self::migrator($object,$classes);
+    public static function checkMigration(MysqliMigration $object, array $classes): void
+    {
+        self::migrator($object, $classes);
     }
 }

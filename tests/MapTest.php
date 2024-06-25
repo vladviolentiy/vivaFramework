@@ -7,72 +7,76 @@ use VladViolentiy\VivaFramework\Map;
 
 class MapTest extends TestCase
 {
-    public function testStringAsKey():void{
+    public function testStringAsKey(): void
+    {
         $info = [
             [
-                "id"=>1,
-                "text"=>"test1"
+                "id" => 1,
+                "text" => "test1"
             ],
             [
-                "id"=>2,
-                "text"=>"test2"
+                "id" => 2,
+                "text" => "test2"
             ]
         ];
         $this->assertEquals([
-            1=>[
-                "text"=>"test1",
+            1 => [
+                "text" => "test1",
             ],
-            2=>[
-                "text"=>"test2"
+            2 => [
+                "text" => "test2"
             ]
-        ],Map::valueAsKey($info,"id"));
+        ], Map::valueAsKey($info, "id"));
     }
 
-    public function testParamValue():void{
+    public function testParamValue(): void
+    {
         $info = [
             [
-                "id"=>1,
-                "text"=>"test1"
+                "id" => 1,
+                "text" => "test1"
             ],
             [
-                "id"=>2,
-                "text"=>"test2"
+                "id" => 2,
+                "text" => "test2"
             ]
         ];
         $this->assertEquals([
-            1=>"test1",
-            2=>"test2",
-        ],Map::paramValue($info,"id","text"));
+            1 => "test1",
+            2 => "test2",
+        ], Map::paramValue($info, "id", "text"));
     }
 
-    public function testSingleValue():void{
+    public function testSingleValue(): void
+    {
         $info = [
             [
-                "id"=>1,
+                "id" => 1,
             ],
             [
-                "id"=>2,
+                "id" => 2,
             ]
         ];
-        $this->assertEquals([1,2],Map::singleValue($info,"id"));
+        $this->assertEquals([1,2], Map::singleValue($info, "id"));
     }
 
-    public function testToBoolValue():void{
+    public function testToBoolValue(): void
+    {
         $info = [
             [
-                "id"=>1,
+                "id" => 1,
             ],
             [
-                "id"=>0,
+                "id" => 0,
             ]
         ];
         $this->assertEquals([
             [
-                "id"=>true,
+                "id" => true,
             ],
             [
-                "id"=>false,
+                "id" => false,
             ]
-        ],Map::toBoolValue($info,"id"));
+        ], Map::toBoolValue($info, "id"));
     }
 }

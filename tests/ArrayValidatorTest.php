@@ -7,15 +7,17 @@ use VladViolentiy\VivaFramework\ArrayValidator;
 
 class ArrayValidatorTest extends TestCase
 {
-    public function testIsIntList():void{
+    public function testIsIntList(): void
+    {
         $info = '[1,2,3,4]';
-        $decoded = json_decode($info,true);
+        $decoded = json_decode($info, true);
         ArrayValidator::intList($decoded);
         self::assertTrue(true);
     }
-    public function testIsStringList():void{
+    public function testIsStringList(): void
+    {
         $info = '["333","123"]';
-        $decoded = json_decode($info,true);
+        $decoded = json_decode($info, true);
         ArrayValidator::stringList($decoded);
         self::assertTrue(true);
     }

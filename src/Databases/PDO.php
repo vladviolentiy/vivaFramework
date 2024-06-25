@@ -47,19 +47,21 @@ abstract class PDO extends DatabaseAbstract
     final protected function executeQuery(string $query, string $types, array $params): PDOStatement
     {
         $prepare = $this->prepare($query);
-        return $this->executePrepare($prepare,$types,$params);
+        return $this->executePrepare($prepare, $types, $params);
     }
 
     final protected function executeQueryBool(string $query, string $types, array $params): void
     {
         $prepare = $this->prepare($query);
-        $this->executePrepare($prepare,$types,$params);
+        $this->executePrepare($prepare, $types, $params);
     }
 
     final protected function executeQueryBoolRaw(string $query): void
     {
         $prepare = $this->prepare($query);
-        if ($prepare->execute() === false) throw new DatabaseException();
+        if ($prepare->execute() === false) {
+            throw new DatabaseException();
+        }
     }
 
     /**
@@ -70,7 +72,9 @@ abstract class PDO extends DatabaseAbstract
     final protected function executeQueryRaw(string $query): PDOStatement
     {
         $prepare = $this->prepare($query);
-        if ($prepare->execute() === false) throw new DatabaseException();
+        if ($prepare->execute() === false) {
+            throw new DatabaseException();
+        }
         return $prepare;
     }
 
@@ -82,7 +86,9 @@ abstract class PDO extends DatabaseAbstract
     final protected function prepare(string $query): PDOStatement
     {
         $pdo = $this->db->prepare($query);
-        if ($pdo === false) throw new DatabaseException();
+        if ($pdo === false) {
+            throw new DatabaseException();
+        }
         return $pdo;
     }
 
@@ -98,14 +104,16 @@ abstract class PDO extends DatabaseAbstract
         $iterator = 0;
         foreach ($params as $key => $param) {
             $type = $this->getType($types[$iterator]);
-            if(is_int($key)){
-                $prepare->bindValue($iterator+1, $param, $type);
+            if(is_int($key)) {
+                $prepare->bindValue($iterator + 1, $param, $type);
             } else {
                 $prepare->bindValue($key, $param, $type);
             }
             $iterator++;
         }
-        if ($prepare->execute() === false) throw new DatabaseException();
+        if ($prepare->execute() === false) {
+            throw new DatabaseException();
+        }
         return $prepare;
     }
 
@@ -127,16 +135,19 @@ abstract class PDO extends DatabaseAbstract
         }
     }
 
-    public function beginTransaction():void{
-        $this->db->setAttribute(\PDO::ATTR_AUTOCOMMIT,0);
+    public function beginTransaction(): void
+    {
+        $this->db->setAttribute(\PDO::ATTR_AUTOCOMMIT, 0);
         $this->db->beginTransaction();
     }
 
-    public function commit():void{
+    public function commit(): void
+    {
         $this->db->commit();
     }
 
-    public function rollback():void{
+    public function rollback(): void
+    {
         $this->db->rollBack();
     }
 
@@ -147,7 +158,8 @@ abstract class PDO extends DatabaseAbstract
      * @throws DatabaseException
      * @throws MigrationException
      */
-    public static function checkMigration(PdoMigration $object, array $classes):void{
-        self::migrator($object,$classes);
+    public static function checkMigration(PdoMigration $object, array $classes): void
+    {
+        self::migrator($object, $classes);
     }
 }

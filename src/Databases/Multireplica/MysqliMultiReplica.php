@@ -22,20 +22,22 @@ abstract class MysqliMultiReplica extends \VladViolentiy\VivaFramework\Databases
      * @param non-empty-string $database
      * @return void
      */
-    protected function initConnection(string $masterIp, array $slaveIps, string $login, string $password, string $database): void{
+    protected function initConnection(string $masterIp, array $slaveIps, string $login, string $password, string $database): void
+    {
         $this->masterInfo = [
-            "server"=>$masterIp,
-            "login"=>$login,
-            "password"=>$password,
-            "database"=>$database
+            "server" => $masterIp,
+            "login" => $login,
+            "password" => $password,
+            "database" => $database
         ];
 
         $server = $slaveIps[array_rand($slaveIps)];
-        $this->setDb(new mysqli($server,$login,$password,$database));
+        $this->setDb(new mysqli($server, $login, $password, $database));
     }
 
-    private function initMaster():void{
-        if(!$this->isMaster){
+    private function initMaster(): void
+    {
+        if(!$this->isMaster) {
             $this->setDb(new mysqli(
                 $this->masterInfo['server'],
                 $this->masterInfo['login'],
@@ -54,9 +56,10 @@ abstract class MysqliMultiReplica extends \VladViolentiy\VivaFramework\Databases
      * @return void
      * @throws DatabaseException
      */
-    protected function executeQueryBool(string $query, string $types, array $params):void{
+    protected function executeQueryBool(string $query, string $types, array $params): void
+    {
         $this->initMaster();
-        parent::executeQueryBool($query,$types,$params);
+        parent::executeQueryBool($query, $types, $params);
     }
 
     /**
@@ -64,12 +67,14 @@ abstract class MysqliMultiReplica extends \VladViolentiy\VivaFramework\Databases
      * @return void
      * @throws DatabaseException
      */
-    protected function executeQueryBoolRaw(string $query):void{
+    protected function executeQueryBoolRaw(string $query): void
+    {
         $this->initMaster();
         parent::executeQueryBoolRaw($query);
     }
 
-    public function beginTransaction():void{
+    public function beginTransaction(): void
+    {
         $this->initMaster();
         parent::beginTransaction();
     }

@@ -11,9 +11,12 @@ class ArrayValidator
      * @return void
      * @throws ValidationException
      */
-    public static function intList(array $input):void{
+    public static function intList(array $input): void
+    {
         foreach ($input as $item) {
-            if(!is_int($item)) throw new ValidationException();
+            if(!is_int($item)) {
+                throw new ValidationException();
+            }
         }
     }
 
@@ -23,9 +26,12 @@ class ArrayValidator
      * @return void
      * @throws ValidationException
      */
-    public static function stringList(array $input):void{
+    public static function stringList(array $input): void
+    {
         foreach ($input as $item) {
-            if(!is_string($item)) throw new ValidationException();
+            if(!is_string($item)) {
+                throw new ValidationException();
+            }
         }
     }
 }

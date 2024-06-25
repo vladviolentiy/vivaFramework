@@ -18,9 +18,10 @@ class Req
      * @param non-empty-string $param
      * @return string
      */
-    public function get(string $param):string{
+    public function get(string $param): string
+    {
         /** @var string $line */
-        $line = $this->request->get($param,"");
+        $line = $this->request->get($param, "");
         return trim($line);
     }
 
@@ -28,10 +29,13 @@ class Req
      * @param non-empty-string $key
      * @return string|null
      */
-    public function getServer(string $key):?string{
+    public function getServer(string $key): ?string
+    {
         /** @var string|null $line */
         $line = $this->request->server->get($key);
-        if($line===null) return null;
+        if($line === null) {
+            return null;
+        }
         return trim($line);
     }
 
@@ -39,7 +43,8 @@ class Req
      * @param non-empty-string $key
      * @return FileBag|null
      */
-    public function getFile(string $key):?FileBag{
+    public function getFile(string $key): ?FileBag
+    {
         /** @var FileBag|null $line */
         $line = $this->request->files->get($key);
         return $line;

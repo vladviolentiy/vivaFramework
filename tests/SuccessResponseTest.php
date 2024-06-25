@@ -7,30 +7,33 @@ use VladViolentiy\VivaFramework\SuccessResponse;
 
 class SuccessResponseTest extends TestCase
 {
-    public function testDataResponse():void{
+    public function testDataResponse(): void
+    {
         $info = [
-            "test"=>true
+            "test" => true
         ];
 
         $this->assertEquals([
-            "success"=>true,
-            "data"=>[
-                "test"=>true
+            "success" => true,
+            "data" => [
+                "test" => true
             ]
-        ],SuccessResponse::data($info));
+        ], SuccessResponse::data($info));
     }
-    public function testTextResponse():void{
+    public function testTextResponse(): void
+    {
         $info = "test";
 
         $this->assertEquals([
-            "success"=>true,
-            "text"=>"test"
-        ],SuccessResponse::text($info));
+            "success" => true,
+            "text" => "test"
+        ], SuccessResponse::text($info));
     }
 
-    public function testNullResponse():void{
+    public function testNullResponse(): void
+    {
         $this->assertEquals([
-            "success"=>true,
-        ],SuccessResponse::null());
+            "success" => true,
+        ], SuccessResponse::null());
     }
 }

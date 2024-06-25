@@ -13,7 +13,7 @@ abstract class DatabaseAbstract
      * @param non-empty-string $query
      * @return void
      */
-    abstract protected function executeQueryBoolRaw(string $query):void;
+    abstract protected function executeQueryBoolRaw(string $query): void;
 
     /**
      * @param non-empty-string $query
@@ -21,13 +21,13 @@ abstract class DatabaseAbstract
      * @param non-empty-list<string|int|float|null> $params
      * @return void
      */
-    abstract protected function executeQueryBool(string $query, string $types, array $params):void;
+    abstract protected function executeQueryBool(string $query, string $types, array $params): void;
 
-    abstract protected function insertId():int;
+    abstract protected function insertId(): int;
 
-    abstract public function beginTransaction():void;
-    abstract public function commit():void;
-    abstract public function rollback():void;
+    abstract public function beginTransaction(): void;
+    abstract public function commit(): void;
+    abstract public function rollback(): void;
 
     /**
      * @param MigrationsClassInterface $info
@@ -36,10 +36,11 @@ abstract class DatabaseAbstract
      * @throws DatabaseException
      * @throws MigrationException
      */
-    protected static function migrator(MigrationsClassInterface $info, array $classList):void{
+    protected static function migrator(MigrationsClassInterface $info, array $classList): void
+    {
         $last = $info->getLastMigration();
         foreach ($classList as $item) {
-            if($last<$item){
+            if($last < $item) {
                 /** @var MigrationInterface $migrationObject */
                 $migrationObject = new $item($info);
                 try {

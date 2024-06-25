@@ -12,13 +12,15 @@ class SqliteMigration extends Sqlite implements MigrationsClassInterface
     {
         /** @var array{current:class-string}|null $i */
         $i = $this->executeQueryRaw("SELECT current FROM migration")->fetchArray(SQLITE3_ASSOC);
-        if($i===null) throw new MigrationException();
+        if($i === null) {
+            throw new MigrationException();
+        }
         return $i['current'];
     }
 
     public function setCurrentMigration(string $current): void
     {
-        $this->executeQueryBool("UPDATE migration set current=?","s",[$current]);
+        $this->executeQueryBool("UPDATE migration set current=?", "s", [$current]);
     }
 
     public function query(string $query): void

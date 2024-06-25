@@ -5,11 +5,13 @@ namespace VladViolentiy\VivaFramework\Tests;
 use PHPUnit\Framework\TestCase;
 use VladViolentiy\VivaFramework\Cleaner;
 
-class CleanerTest extends TestCase{
-    public function testPhoneCleaner():void{
-        $this->assertEquals("79999999999",Cleaner::phoneNumber("+79999999999"));
-        $this->assertEquals("79999999999",Cleaner::phoneNumber("    +79999999999 "));
-        $this->assertEquals("79999999999",Cleaner::phoneNumber("+7 999 999 99 99 "));
-        $this->assertEquals("79999999999",Cleaner::phoneNumber("+7-999-999-99-99 "));
+class CleanerTest extends TestCase
+{
+    public function testPhoneCleaner(): void
+    {
+        $this->assertEquals("79999999999", Cleaner::phoneNumber("+79999999999"));
+        $this->assertEquals("79999999999", Cleaner::phoneNumber("    +79999999999 "));
+        $this->assertEquals("79999999999", Cleaner::phoneNumber("+7 999 999 99 99 "));
+        $this->assertEquals("79999999999", Cleaner::phoneNumber("+7-999-999-99-99 "));
     }
 }
