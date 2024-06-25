@@ -20,6 +20,15 @@ abstract class Validation
         if(!preg_match('/^[0-9a-f]{'.$length.'}$/',$value)) throw new ValidationException($errorText);
     }
 
+    /** @phpstan-assert non-empty-string $value */
+    public static function date(string $value,string $errorText = "Incorrect date value"):void{
+        if(!preg_match('/^\d\d\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/',$value)) throw new ValidationException($errorText);
+    }
+    /** @phpstan-assert non-empty-string $value */
+    public static function time(string $value,string $errorText = "Incorrect time value"):void{
+        if(!preg_match('/^([01]\d|2[0-3]):[0-5]\d:[0-5]\d$/',$value)) throw new ValidationException($errorText);
+    }
+
     /** @phpstan-assert positive-int $item */
     public static function id(int $item,string $errorText = "Incorrect id"):void{
         if($item<=0) throw new ValidationException($errorText);

@@ -26,4 +26,50 @@ class ValidationTest extends TestCase
         Validation::uuid("2f7bdad5-f4e7-457b-acab-b7eda3913567");
         $this->assertTrue(true);
     }
+
+    public function testDate():void
+    {
+        Validation::date("2000-01-01");
+        $this->assertTrue(true);
+    }
+
+    public function testIncorrectDate():void
+    {
+        $this->expectException(ValidationException::class);
+        Validation::date("2000-01-32");
+    }
+
+    public function testIncorrectDate2():void
+    {
+        $this->expectException(ValidationException::class);
+        Validation::date("2000-13-01");
+    }
+
+    public function testTime():void
+    {
+        Validation::time("04:00:00");
+        $this->assertTrue(true);
+    }
+
+    public function testIncorrectSeconds():void
+    {
+        $this->expectException(ValidationException::class);
+        Validation::time("04:00:60");
+    }
+
+    public function testIncorrectHours():void
+    {
+        $this->expectException(ValidationException::class);
+        Validation::time("-01:00:00");
+    }
+    public function testIncorrectHours2():void
+    {
+        $this->expectException(ValidationException::class);
+        Validation::time("4:00:00");
+    }
+    public function testIncorrectHours3():void
+    {
+        $this->expectException(ValidationException::class);
+        Validation::time("24:00:00");
+    }
 }
