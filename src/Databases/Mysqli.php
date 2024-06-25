@@ -56,8 +56,8 @@ abstract class Mysqli extends DatabaseAbstract
 
     protected function executeQueryBoolRaw(string $query): void
     {
-        $prepare = $this->prepare($query);
-        if($prepare->execute() === false) {
+        $result = $this->db->query($query);
+        if($result === false) {
             throw new DatabaseException();
         }
     }
