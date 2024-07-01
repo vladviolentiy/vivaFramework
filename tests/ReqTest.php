@@ -30,7 +30,7 @@ class ReqTest extends TestCase
     public function testInputFile(): void
     {
         $request = new Request();
-        $request->files->set("file", new UploadedFile("./ReqTest.php","ReqTest.php"));
+        $request->files->set("file", new UploadedFile(__DIR__."/ReqTest.php","ReqTest.php"));
         $req = new Req($request);
         $this->assertInstanceOf(UploadedFile::class, $req->getFile("file"));
     }
