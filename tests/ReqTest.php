@@ -3,6 +3,7 @@
 namespace VladViolentiy\VivaFramework\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use VladViolentiy\VivaFramework\Req;
 
@@ -24,5 +25,13 @@ class ReqTest extends TestCase
         $request->server->set("auth", "testAuth");
         $req = new Req($request);
         $this->assertEquals("testAuth", $req->getServer("auth"));
+    }
+
+    public function testInputFile(): void
+    {
+        $request = new Request();
+        $request->files->set("file", new UploadedFile("./ReqTest.php","ReqTest.php"));
+        $req = new Req($request);
+        $this->assertInstanceOf(UploadedFile::class, $req->getFile("file"));
     }
 }
