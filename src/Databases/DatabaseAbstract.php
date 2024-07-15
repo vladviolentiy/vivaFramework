@@ -36,7 +36,7 @@ abstract class DatabaseAbstract
      * @throws DatabaseException
      * @throws MigrationException
      */
-    protected static function migrator(MigrationsClassInterface $info, array $classList): void
+    public static function migrator(MigrationsClassInterface $info, array $classList): void
     {
         if(!$info->checkIssetMigrationTable()) {
             $info->createMigrationTable();
