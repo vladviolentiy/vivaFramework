@@ -61,8 +61,7 @@ abstract class MysqliV2
         string $login,
         string $password,
         string $database
-    ): void
-    {
+    ): void {
         $this->masterInfo = [
             "server" => $masterIp,
             "login" => $login,
@@ -71,7 +70,7 @@ abstract class MysqliV2
         ];
 
         $server = $slaveIps[array_rand($slaveIps)];
-        $this->openConnection($server,$login,$password,$database);
+        $this->openConnection($server, $login, $password, $database);
     }
 
 
@@ -93,8 +92,7 @@ abstract class MysqliV2
         string $login,
         string $password,
         string $database
-    ): void
-    {
+    ): void {
         $this->isMaster = true;
         $this->openConnection($masterIp, $login, $password, $database);
     }
