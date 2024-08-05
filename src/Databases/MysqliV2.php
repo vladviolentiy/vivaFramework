@@ -27,6 +27,7 @@ abstract class MysqliV2
      */
     private function openConnection(string $masterIp, string $login, string $password, string $database): void
     {
+        $this->isMaster = true;
         $this->db = new \mysqli($masterIp, $login, $password, $database);
         if ($this->db->errno !== 0) {
             throw new DatabaseException();
