@@ -104,7 +104,7 @@ abstract class PDO extends DatabaseAbstract
         $iterator = 0;
         foreach ($params as $key => $param) {
             $type = $this->getType($types[$iterator]);
-            if(is_int($key)) {
+            if (is_int($key)) {
                 $prepare->bindValue($iterator + 1, $param, $type);
             } else {
                 $prepare->bindValue($key, $param, $type);

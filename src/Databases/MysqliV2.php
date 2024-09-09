@@ -35,7 +35,7 @@ abstract class MysqliV2
 
     private function initMaster(): void
     {
-        if(!$this->isMaster) {
+        if (!$this->isMaster) {
             $this->openConnection(
                 $this->masterInfo['server'],
                 $this->masterInfo['login'],
@@ -134,7 +134,7 @@ abstract class MysqliV2
     {
         $this->initMaster();
         $result = $this->db->query($query);
-        if($result === false) {
+        if ($result === false) {
             throw new DatabaseException();
         }
     }
@@ -147,11 +147,11 @@ abstract class MysqliV2
     final protected function executeQueryRaw(string $query): \mysqli_result
     {
         $prepare = $this->prepare($query);
-        if($prepare->execute() === false) {
+        if ($prepare->execute() === false) {
             throw new DatabaseException();
         }
         $result = $prepare->get_result();
-        if($result === false) {
+        if ($result === false) {
             throw new DatabaseException();
         }
         return $result;
@@ -165,7 +165,7 @@ abstract class MysqliV2
     final protected function prepare(string $query): \mysqli_stmt
     {
         $pdo = $this->db->prepare($query);
-        if($pdo === false) {
+        if ($pdo === false) {
             throw new DatabaseException();
         }
         return $pdo;
@@ -179,11 +179,11 @@ abstract class MysqliV2
      */
     final protected function executePrepare(\mysqli_stmt $prepare, array $params): \mysqli_result
     {
-        if($prepare->execute($params) === false) {
+        if ($prepare->execute($params) === false) {
             throw new DatabaseException();
         }
         $result =  $prepare->get_result();
-        if($result === false) {
+        if ($result === false) {
             throw new DatabaseException();
         }
         return $result;
@@ -197,7 +197,7 @@ abstract class MysqliV2
      */
     final protected function executePrepareBool(\mysqli_stmt $prepare, array $params): void
     {
-        if($prepare->execute($params) === false) {
+        if ($prepare->execute($params) === false) {
             throw new DatabaseException();
         }
     }

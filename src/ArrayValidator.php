@@ -14,7 +14,7 @@ class ArrayValidator
     public static function intList(array $input): void
     {
         foreach ($input as $item) {
-            if(!is_int($item)) {
+            if (!is_int($item)) {
                 throw new ValidationException();
             }
         }
@@ -29,7 +29,7 @@ class ArrayValidator
     public static function stringList(array $input): void
     {
         foreach ($input as $item) {
-            if(!is_string($item)) {
+            if (!is_string($item)) {
                 throw new ValidationException();
             }
         }

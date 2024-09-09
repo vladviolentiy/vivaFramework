@@ -29,7 +29,7 @@ class PdoMigration extends PDO implements MigrationsClassInterface
     {
         /** @var array{current:class-string}|null $i */
         $i = $this->executeQueryRaw("SELECT current FROM migration ")->fetch(\PDO::FETCH_ASSOC);
-        if($i === null) {
+        if ($i === null) {
             throw new MigrationException();
         }
         return $i['current'];

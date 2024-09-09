@@ -33,7 +33,7 @@ class Req
     {
         /** @var string|null $line */
         $line = $this->request->server->get($key);
-        if($line === null) {
+        if ($line === null) {
             return null;
         }
         return trim($line);

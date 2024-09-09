@@ -16,7 +16,7 @@ class MysqliMigration extends Mysqli implements MigrationsClassInterface
     {
         /** @var array{current:class-string}|null $i */
         $i = $this->executeQueryRaw("SELECT current FROM migration ")->fetch_array(MYSQLI_ASSOC);
-        if($i === null) {
+        if ($i === null) {
             throw new MigrationException();
         }
         return $i['current'];

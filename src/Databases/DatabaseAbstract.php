@@ -38,12 +38,12 @@ abstract class DatabaseAbstract
      */
     public static function migrator(MigrationsClassInterface $info, array $classList): void
     {
-        if(!$info->checkIssetMigrationTable()) {
+        if (!$info->checkIssetMigrationTable()) {
             $info->createMigrationTable();
         }
         $last = $info->getLastMigration();
         foreach ($classList as $item) {
-            if($last < $item) {
+            if ($last < $item) {
                 /** @var MigrationInterface $migrationObject */
                 $migrationObject = new $item($info);
                 try {

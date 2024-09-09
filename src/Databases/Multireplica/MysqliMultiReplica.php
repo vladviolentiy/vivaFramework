@@ -37,7 +37,7 @@ abstract class MysqliMultiReplica extends \VladViolentiy\VivaFramework\Databases
 
     private function initMaster(): void
     {
-        if(!$this->isMaster) {
+        if (!$this->isMaster) {
             $this->setDb(new mysqli(
                 $this->masterInfo['server'],
                 $this->masterInfo['login'],

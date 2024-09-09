@@ -36,7 +36,7 @@ abstract class Sqlite extends DatabaseAbstract
     final protected function openConnection(string $file): void
     {
         $this->db = new \SQLite3($file);
-        if($this->db->lastErrorCode() !== 0) {
+        if ($this->db->lastErrorCode() !== 0) {
             throw new DatabaseException();
         }
     }
@@ -69,7 +69,7 @@ abstract class Sqlite extends DatabaseAbstract
     {
         $prepare = $this->prepare($query);
         $result = $prepare->execute();
-        if($result === false) {
+        if ($result === false) {
             throw new DatabaseException();
         }
     }
@@ -83,7 +83,7 @@ abstract class Sqlite extends DatabaseAbstract
     {
         $prepare = $this->prepare($query);
         $result = $prepare->execute();
-        if($result === false) {
+        if ($result === false) {
             throw new DatabaseException();
         }
         return  $result;
@@ -97,7 +97,7 @@ abstract class Sqlite extends DatabaseAbstract
     protected function prepare(string $query): \SQLite3Stmt
     {
         $i = $this->db->prepare($query);
-        if($i === false) {
+        if ($i === false) {
             throw new DatabaseException();
         }
         return $i;
@@ -117,7 +117,7 @@ abstract class Sqlite extends DatabaseAbstract
             $prepare->bindParam($key, $param, $type);
         }
         $result = $prepare->execute();
-        if($result === false) {
+        if ($result === false) {
             throw new DatabaseException();
         }
         return  $result;
