@@ -37,7 +37,7 @@ class MysqliMigration extends Mysqli implements MigrationsClassInterface
     {
         $this->executeQueryBoolRaw("create table migration
 (
-    current varchar(128) not null,
+    current varchar(256) not null,
     constraint migration_pk
         primary key (current)
 )");
