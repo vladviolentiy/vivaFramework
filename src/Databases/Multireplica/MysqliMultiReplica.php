@@ -25,10 +25,10 @@ abstract class MysqliMultiReplica extends \VladViolentiy\VivaFramework\Databases
     protected function initConnection(string $masterIp, array $slaveIps, string $login, string $password, string $database): void
     {
         $this->masterInfo = [
-            "server" => $masterIp,
-            "login" => $login,
-            "password" => $password,
-            "database" => $database
+            'server' => $masterIp,
+            'login' => $login,
+            'password' => $password,
+            'database' => $database,
         ];
 
         $server = $slaveIps[array_rand($slaveIps)];

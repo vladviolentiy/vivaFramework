@@ -131,7 +131,7 @@ abstract class Mysqli extends DatabaseAbstract
 
     final protected function insertId(): int
     {
-        return (int)$this->db->insert_id;
+        return (int) $this->db->insert_id;
     }
 
     /**

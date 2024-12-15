@@ -47,13 +47,13 @@ abstract class DatabaseAbstract
                 /** @var MigrationInterface $migrationObject */
                 $migrationObject = new $item($info);
                 try {
-                    $info->query("START TRANSACTION");
+                    $info->query('START TRANSACTION');
                     $migrationObject->init();
                     $info->setCurrentMigration($item);
-                    $info->query("COMMIT");
+                    $info->query('COMMIT');
                 } catch (\Exception $e) {
-                    $info->query("ROLLBACK");
-                    throw new MigrationException("Migrations exception. ".$e->getMessage());
+                    $info->query('ROLLBACK');
+                    throw new MigrationException('Migrations exception. ' . $e->getMessage());
                 }
             }
         }

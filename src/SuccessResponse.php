@@ -11,8 +11,8 @@ abstract class SuccessResponse
     public static function data(array $data): array
     {
         return [
-            "success" => true,
-            "data" => $data
+            'success' => true,
+            'data' => $data,
         ];
     }
 
@@ -23,8 +23,8 @@ abstract class SuccessResponse
     public static function text(string $text): array
     {
         return [
-            "success" => true,
-            "text" => $text
+            'success' => true,
+            'text' => $text,
         ];
     }
 
@@ -34,7 +34,7 @@ abstract class SuccessResponse
     public static function null(): array
     {
         return [
-            "success" => true,
+            'success' => true,
         ];
     }
 }

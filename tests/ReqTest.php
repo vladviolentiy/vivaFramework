@@ -12,26 +12,26 @@ class ReqTest extends TestCase
     public function testSimplePost(): void
     {
         $request = new Request();
-        $request->request->set("value", "123");
-        $request->request->set("text", "textValue");
+        $request->request->set('value', '123');
+        $request->request->set('text', 'textValue');
         $req = new Req($request);
-        $this->assertEquals("123", $req->get("value"));
-        $this->assertEquals("textValue", $req->get("text"));
+        $this->assertEquals('123', $req->get('value'));
+        $this->assertEquals('textValue', $req->get('text'));
     }
 
     public function testServerHeader(): void
     {
         $request = new Request();
-        $request->server->set("auth", "testAuth");
+        $request->server->set('auth', 'testAuth');
         $req = new Req($request);
-        $this->assertEquals("testAuth", $req->getServer("auth"));
+        $this->assertEquals('testAuth', $req->getServer('auth'));
     }
 
     public function testInputFile(): void
     {
         $request = new Request();
-        $request->files->set("file", new UploadedFile(__DIR__."/ReqTest.php", "ReqTest.php"));
+        $request->files->set('file', new UploadedFile(__DIR__ . '/ReqTest.php', 'ReqTest.php'));
         $req = new Req($request);
-        $this->assertInstanceOf(UploadedFile::class, $req->getFile("file"));
+        $this->assertInstanceOf(UploadedFile::class, $req->getFile('file'));
     }
 }

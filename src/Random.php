@@ -20,7 +20,7 @@ abstract class Random
      * @param non-empty-string $algo
      * @return non-empty-string
      */
-    public static function hash(string $value, string $algo = "sha384"): string
+    public static function hash(string $value, string $algo = 'sha384'): string
     {
         return hash($algo, $value);
     }

@@ -10,30 +10,30 @@ class SuccessResponseTest extends TestCase
     public function testDataResponse(): void
     {
         $info = [
-            "test" => true
+            'test' => true,
         ];
 
         $this->assertEquals([
-            "success" => true,
-            "data" => [
-                "test" => true
-            ]
+            'success' => true,
+            'data' => [
+                'test' => true,
+            ],
         ], SuccessResponse::data($info));
     }
     public function testTextResponse(): void
     {
-        $info = "test";
+        $info = 'test';
 
         $this->assertEquals([
-            "success" => true,
-            "text" => "test"
+            'success' => true,
+            'text' => 'test',
         ], SuccessResponse::text($info));
     }
 
     public function testNullResponse(): void
     {
         $this->assertEquals([
-            "success" => true,
+            'success' => true,
         ], SuccessResponse::null());
     }
 }

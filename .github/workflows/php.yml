@@ -42,3 +42,6 @@ jobs:
 
       - name: Run phpstan
         run: composer run-script phpstan
+
+      - name: Check php cs  rules
+        run: composer run-script php-cs-fixer

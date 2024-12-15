@@ -55,7 +55,7 @@ abstract class Map
     public static function toBoolValue(array $data, string $param): array
     {
         return array_map(function ($item) use ($param) {
-            $item[$param] = (bool)$item[$param];
+            $item[$param] = (bool) $item[$param];
             return $item;
         }, $data);
     }

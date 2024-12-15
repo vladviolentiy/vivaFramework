@@ -21,7 +21,7 @@ class Req
     public function get(string $param): string
     {
         /** @var string $line */
-        $line = $this->request->get($param, "");
+        $line = $this->request->get($param, '');
         return trim($line);
     }
 

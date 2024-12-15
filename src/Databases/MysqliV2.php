@@ -60,13 +60,13 @@ abstract class MysqliV2
         array $slaveIps,
         string $login,
         string $password,
-        string $database
+        string $database,
     ): void {
         $this->masterInfo = [
-            "server" => $masterIp,
-            "login" => $login,
-            "password" => $password,
-            "database" => $database
+            'server' => $masterIp,
+            'login' => $login,
+            'password' => $password,
+            'database' => $database,
         ];
 
         $server = $slaveIps[array_rand($slaveIps)];
@@ -92,7 +92,7 @@ abstract class MysqliV2
         string $masterIp,
         string $login,
         string $password,
-        string $database
+        string $database,
     ): void {
         $this->isMaster = true;
         $this->openConnection($masterIp, $login, $password, $database);
@@ -204,7 +204,7 @@ abstract class MysqliV2
 
     final protected function insertId(): int
     {
-        return (int)$this->db->insert_id;
+        return (int) $this->db->insert_id;
     }
 
     public function beginTransaction(): void

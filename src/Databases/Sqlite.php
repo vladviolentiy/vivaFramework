@@ -19,7 +19,7 @@ abstract class Sqlite extends DatabaseAbstract
         return match ($types) {
             'i' => SQLITE3_INTEGER,
             'd' => SQLITE3_FLOAT,
-            default => SQLITE3_TEXT
+            default => SQLITE3_TEXT,
         };
     }
 
@@ -128,17 +128,11 @@ abstract class Sqlite extends DatabaseAbstract
         return $this->db->lastInsertRowID();
     }
 
-    public function beginTransaction(): void
-    {
-    }
+    public function beginTransaction(): void {}
 
-    public function commit(): void
-    {
-    }
+    public function commit(): void {}
 
-    public function rollback(): void
-    {
-    }
+    public function rollback(): void {}
 
     /**
      * @param SqliteMigration $object

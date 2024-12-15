@@ -14,7 +14,7 @@ class JSON
      * @return object
      * @throws ValidationException
      */
-    public static function Unmarshal(string $input, string $structure, string $errorText = "Error decode json"): object
+    public static function Unmarshal(string $input, string $structure, string $errorText = 'Error decode json'): object
     {
         /** @var object|array<mixed,object>|null $data */
         $data = json_decode($input);
@@ -41,13 +41,13 @@ class JSON
             if (property_exists($object, $key)) {
                 if (is_object($value)) {
                     /** @var class-string $type */
-                    $type = (string)(new ReflectionClass($object))->getProperty($key)->getType();
+                    $type = (string) (new ReflectionClass($object))->getProperty($key)->getType();
                     $object->{$key} = self::recursiveMethod($value, $type);
                 } else {
                     $object->{$key} = $value;
                 }
             } else {
-                throw new ValidationException("Incorrect method");
+                throw new ValidationException('Incorrect method');
             }
         }
 

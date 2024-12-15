@@ -5,7 +5,6 @@ namespace VladViolentiy\VivaFramework\Databases;
 use PDOStatement;
 use VladViolentiy\VivaFramework\Databases\Interfaces\MigrationInterface;
 use VladViolentiy\VivaFramework\Databases\Migrations\PdoMigration;
-use VladViolentiy\VivaFramework\Databases\Migrations\SqliteMigration;
 use VladViolentiy\VivaFramework\Exceptions\DatabaseException;
 use VladViolentiy\VivaFramework\Exceptions\MigrationException;
 
@@ -119,7 +118,7 @@ abstract class PDO extends DatabaseAbstract
 
     final protected function insertId(): int
     {
-        return (int)$this->db->lastInsertId();
+        return (int) $this->db->lastInsertId();
     }
 
     /**
