@@ -17,7 +17,7 @@ class MysqlMigrationManager extends MysqliV2 implements MigrationsClassInterface
     private function checkIssetMigration(string $migration): bool
     {
         /** @var array{count:int<0,1>}|null $data */
-        $data = $this->executeQuery('SELECT count(*) as count FROM migration WHERE migration=?', [$migration])->fetch_array(MYSQLI_ASSOC);
+        $data = $this->executeQuery('SELECT count(*) as count FROM migrations WHERE migration=?', [$migration])->fetch_array(MYSQLI_ASSOC);
         if ($data === null) {
             throw new MigrationException();
         }
@@ -31,7 +31,7 @@ class MysqlMigrationManager extends MysqliV2 implements MigrationsClassInterface
      */
     private function setMigration(string $migration): void
     {
-        $this->executeQueryBool('INSERT INTO migration(migration) VALUES (?)', [$migration]);
+        $this->executeQueryBool('INSERT INTO migrations(migration) VALUES (?)', [$migration]);
     }
 
     /**
@@ -46,13 +46,13 @@ class MysqlMigrationManager extends MysqliV2 implements MigrationsClassInterface
 
     private function checkIssetMigrationTable(): bool
     {
-        $count = $this->executeQueryRaw("show tables like 'migration'")->num_rows;
+        $count = $this->executeQueryRaw("show tables like 'migrations'")->num_rows;
         return $count > 0;
     }
 
     private function createMigrationTable(): void
     {
-        $this->executeQueryBoolRaw('create table migration
+        $this->executeQueryBoolRaw('create table migrations
 (
     migration varchar(256) not null primary key
 )');
