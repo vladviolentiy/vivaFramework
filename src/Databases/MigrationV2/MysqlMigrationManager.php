@@ -17,7 +17,7 @@ class MysqlMigrationManager extends MysqliV2 implements MigrationsClassInterface
     private function checkIssetMigration(string $migration): bool
     {
         /** @var array{count:int<0,1>}|null $data */
-        $data = $this->executeQuery('SELECT count(*) as count FROM migrations WHERE migration=?', [$migration])->fetch_array(MYSQLI_ASSOC);
+        $data = $this->executeQuery('SELECT count(*) as count FROM migration WHERE migration=?', [$migration])->fetch_array(MYSQLI_ASSOC);
         if ($data === null) {
             throw new MigrationException();
         }
