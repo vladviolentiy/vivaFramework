@@ -20,6 +20,7 @@ class SuccessResponseTest extends TestCase
             ],
         ], SuccessResponse::data($info));
     }
+
     public function testTextResponse(): void
     {
         $info = 'test';

@@ -34,4 +34,21 @@ class ReqTest extends TestCase
         $req = new Req($request);
         $this->assertInstanceOf(UploadedFile::class, $req->getFile('file'));
     }
+
+    public function testExtractFromJson(): void
+    {
+        $jsonPayload = '{"key": "value"}';
+        $request = Request::create(
+            '/path',
+            'POST',
+            [],
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json'],
+            $jsonPayload,
+        );
+        $req = new Req($request);
+        $this->assertEquals('value', $req->get('key'));
+        $this->assertEquals('value', $req->getArray()['key']);
+    }
 }

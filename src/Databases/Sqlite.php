@@ -57,6 +57,7 @@ abstract class Sqlite extends DatabaseAbstract
     protected function executeQuery(string $query, string $types, array $params): \SQLite3Result
     {
         $prepare = $this->prepare($query);
+
         return $this->executePrepare($prepare, $types, $params);
     }
 
@@ -86,6 +87,7 @@ abstract class Sqlite extends DatabaseAbstract
         if ($result === false) {
             throw new DatabaseException();
         }
+
         return  $result;
     }
 
@@ -100,6 +102,7 @@ abstract class Sqlite extends DatabaseAbstract
         if ($i === false) {
             throw new DatabaseException();
         }
+
         return $i;
     }
 
@@ -120,6 +123,7 @@ abstract class Sqlite extends DatabaseAbstract
         if ($result === false) {
             throw new DatabaseException();
         }
+
         return  $result;
     }
 

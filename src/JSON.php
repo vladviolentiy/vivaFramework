@@ -21,6 +21,7 @@ class JSON
         if ($data === null) {
             throw new ValidationException($errorText);
         }
+
         return self::recursiveMethod($data, $structure);
     }
 

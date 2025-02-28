@@ -26,7 +26,9 @@ abstract class DatabaseAbstract
     abstract protected function insertId(): int;
 
     abstract public function beginTransaction(): void;
+
     abstract public function commit(): void;
+
     abstract public function rollback(): void;
 
     /**
@@ -46,6 +48,7 @@ abstract class DatabaseAbstract
             if ($last < $item) {
                 /** @var MigrationInterface $migrationObject */
                 $migrationObject = new $item($info);
+
                 try {
                     $info->query('START TRANSACTION');
                     $migrationObject->init();
@@ -53,6 +56,7 @@ abstract class DatabaseAbstract
                     $info->query('COMMIT');
                 } catch (\Exception $e) {
                     $info->query('ROLLBACK');
+
                     throw new MigrationException('Migrations exception. ' . $e->getMessage());
                 }
             }

@@ -21,6 +21,7 @@ class MysqlMigrationManager extends MysqliV2 implements MigrationsClassInterface
         if ($data === null) {
             throw new MigrationException();
         }
+
         return $data['count'] > 0;
     }
 
@@ -47,6 +48,7 @@ class MysqlMigrationManager extends MysqliV2 implements MigrationsClassInterface
     private function checkIssetMigrationTable(): bool
     {
         $count = $this->executeQueryRaw("show tables like 'migrations'")->num_rows;
+
         return $count > 0;
     }
 
@@ -77,6 +79,7 @@ class MysqlMigrationManager extends MysqliV2 implements MigrationsClassInterface
 
             /** @var MigrationInterfaceV2 $migrationObject */
             $migrationObject = new $item($this);
+
             try {
                 $related = $migrationObject->related();
                 if (!empty($related)) {
@@ -88,9 +91,9 @@ class MysqlMigrationManager extends MysqliV2 implements MigrationsClassInterface
                 $this->commit();
             } catch (\Exception $e) {
                 $this->rollback();
+
                 throw new MigrationException('Migrations exception. ' . $e->getMessage());
             }
         }
     }
-
 }

@@ -9,7 +9,7 @@ abstract class Validation
     /** @phpstan-assert non-empty-string $value */
     public static function nonEmpty(string $value, string $errorText = 'String is empty'): void
     {
-        if ($value === '') {
+        if (empty($value)) {
             throw new ValidationException($errorText);
         }
     }
@@ -36,6 +36,7 @@ abstract class Validation
             throw new ValidationException($errorText);
         }
     }
+
     /** @phpstan-assert non-empty-string $value */
     public static function time(string $value, string $errorText = 'Incorrect time value'): void
     {

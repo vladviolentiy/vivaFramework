@@ -73,7 +73,6 @@ abstract class MysqliV2
         $this->openConnection($server, $login, $password, $database);
     }
 
-
     final protected function setDb(\mysqli $db): void
     {
         $this->isMaster = true;
@@ -107,9 +106,9 @@ abstract class MysqliV2
     final protected function executeQuery(string $query, array $params): \mysqli_result
     {
         $prepare = $this->prepare($query);
+
         return $this->executePrepare($prepare, $params);
     }
-
 
     /**
      * @param non-empty-string $query
@@ -123,7 +122,6 @@ abstract class MysqliV2
         $prepare = $this->prepare($query);
         $this->executePrepareBool($prepare, $params);
     }
-
 
     /**
      * @param non-empty-string $query
@@ -154,6 +152,7 @@ abstract class MysqliV2
         if ($result === false) {
             throw new DatabaseException();
         }
+
         return $result;
     }
 
@@ -168,6 +167,7 @@ abstract class MysqliV2
         if ($pdo === false) {
             throw new DatabaseException();
         }
+
         return $pdo;
     }
 
@@ -186,6 +186,7 @@ abstract class MysqliV2
         if ($result === false) {
             throw new DatabaseException();
         }
+
         return $result;
     }
 

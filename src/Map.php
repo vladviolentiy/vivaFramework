@@ -17,6 +17,7 @@ abstract class Map
             unset($item[$value]);
             $i[$element] = $item;
         }
+
         return $i;
     }
 
@@ -44,6 +45,7 @@ abstract class Map
         foreach ($data as $item) {
             $i[$item[$param]] = $item[$value];
         }
+
         return $i;
     }
 
@@ -56,6 +58,7 @@ abstract class Map
     {
         return array_map(function ($item) use ($param) {
             $item[$param] = (bool) $item[$param];
+
             return $item;
         }, $data);
     }

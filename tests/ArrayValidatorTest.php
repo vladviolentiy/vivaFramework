@@ -14,6 +14,7 @@ class ArrayValidatorTest extends TestCase
         $decoded = json_decode($info, true);
         ArrayValidator::intList($decoded);
     }
+
     public function testIsStringList(): void
     {
         $this->expectNotToPerformAssertions();

@@ -46,6 +46,7 @@ abstract class PDO extends DatabaseAbstract
     final protected function executeQuery(string $query, string $types, array $params): PDOStatement
     {
         $prepare = $this->prepare($query);
+
         return $this->executePrepare($prepare, $types, $params);
     }
 
@@ -74,6 +75,7 @@ abstract class PDO extends DatabaseAbstract
         if ($prepare->execute() === false) {
             throw new DatabaseException();
         }
+
         return $prepare;
     }
 
@@ -88,6 +90,7 @@ abstract class PDO extends DatabaseAbstract
         if ($pdo === false) {
             throw new DatabaseException();
         }
+
         return $pdo;
     }
 
@@ -113,6 +116,7 @@ abstract class PDO extends DatabaseAbstract
         if ($prepare->execute() === false) {
             throw new DatabaseException();
         }
+
         return $prepare;
     }
 

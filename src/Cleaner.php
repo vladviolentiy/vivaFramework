@@ -14,6 +14,7 @@ abstract class Cleaner
         $phone = filter_var($phone, FILTER_SANITIZE_NUMBER_INT);
         /** @var numeric-string $result */
         $result = str_replace(['+', '-'], '', $phone);
+
         return $result;
     }
 }

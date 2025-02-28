@@ -14,6 +14,7 @@ class ValidationTest extends TestCase
         // @phpstan-ignore-next-line
         Validation::nonEmpty('');
     }
+
     public function testEmail(): void
     {
         $this->expectNotToPerformAssertions();
@@ -53,7 +54,6 @@ class ValidationTest extends TestCase
         // @phpstan-ignore-next-line
         Validation::date('2000-13-01');
     }
-
 
     public function testIncorrectHours2(): void
     {

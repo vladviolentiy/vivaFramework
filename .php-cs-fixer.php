@@ -10,6 +10,12 @@ return (new PhpCsFixer\Config())
         'trim_array_spaces' => true,
         'no_unset_cast' => true,
         'no_unused_imports' => true,
+        'blank_line_before_statement' => true,
+        'object_operator_without_whitespace' => true,
+        'class_attributes_separation' => [
+            'elements' => ['method' => 'one'],
+        ],
+        'phpdoc_trim' => true,
     ])
     ->setFinder(
         (new PhpCsFixer\Finder())->in('src')->in('tests'),

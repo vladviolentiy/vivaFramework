@@ -10,6 +10,7 @@ class PdoMigration extends PDO implements MigrationsClassInterface
     public function checkIssetMigrationTable(): bool
     {
         $count = $this->executeQueryRaw("show tables like 'migration'")->rowCount();
+
         return $count > 0;
     }
 
@@ -31,6 +32,7 @@ class PdoMigration extends PDO implements MigrationsClassInterface
         if ($i === null) {
             throw new MigrationException();
         }
+
         return $i['current'];
     }
 
@@ -38,7 +40,6 @@ class PdoMigration extends PDO implements MigrationsClassInterface
     {
         $this->executeQueryBool('UPDATE migration set current=?', 's', [$current]);
     }
-
 
     public function query(string $query): void
     {

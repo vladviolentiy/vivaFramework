@@ -21,7 +21,8 @@ class Req
     public function get(string $param): string
     {
         /** @var string $line */
-        $line = $this->request->get($param, '');
+        $line = $this->request->getPayload()->get($param, '');
+
         return trim($line);
     }
 
@@ -36,6 +37,7 @@ class Req
         if ($line === null) {
             return null;
         }
+
         return trim($line);
     }
 
@@ -47,6 +49,15 @@ class Req
     {
         /** @var UploadedFile|null $line */
         $line = $this->request->files->get($key);
+
         return $line;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    public function getArray(): array
+    {
+        return $this->request->toArray();
     }
 }

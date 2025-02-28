@@ -12,6 +12,7 @@ abstract class Random
     {
         /** @phpstan-var non-empty-string $i */
         $i = openssl_random_pseudo_bytes($count);
+
         return $i;
     }
 

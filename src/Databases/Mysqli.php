@@ -11,7 +11,6 @@ abstract class Mysqli extends DatabaseAbstract
 {
     private \mysqli $db;
 
-
     final protected function setDb(\mysqli $db): void
     {
         $this->db = $db;
@@ -43,16 +42,15 @@ abstract class Mysqli extends DatabaseAbstract
     final protected function executeQuery(string $query, string $types, array $params): \mysqli_result
     {
         $prepare = $this->prepare($query);
+
         return $this->executePrepare($prepare, $types, $params);
     }
-
 
     protected function executeQueryBool(string $query, string $types, array $params): void
     {
         $prepare = $this->prepare($query);
         $this->executePrepareBool($prepare, $types, $params);
     }
-
 
     protected function executeQueryBoolRaw(string $query): void
     {
@@ -77,6 +75,7 @@ abstract class Mysqli extends DatabaseAbstract
         if ($result === false) {
             throw new DatabaseException();
         }
+
         return $result;
     }
 
@@ -91,6 +90,7 @@ abstract class Mysqli extends DatabaseAbstract
         if ($pdo === false) {
             throw new DatabaseException();
         }
+
         return $pdo;
     }
 
@@ -111,6 +111,7 @@ abstract class Mysqli extends DatabaseAbstract
         if ($result === false) {
             throw new DatabaseException();
         }
+
         return $result;
     }
 

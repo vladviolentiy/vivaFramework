@@ -19,6 +19,7 @@ class MysqliMigration extends Mysqli implements MigrationsClassInterface
         if ($i === null) {
             throw new MigrationException();
         }
+
         return $i['current'];
     }
 
@@ -30,6 +31,7 @@ class MysqliMigration extends Mysqli implements MigrationsClassInterface
     public function checkIssetMigrationTable(): bool
     {
         $count = $this->executeQueryRaw("show tables like 'migration'")->num_rows;
+
         return $count > 0;
     }
 
