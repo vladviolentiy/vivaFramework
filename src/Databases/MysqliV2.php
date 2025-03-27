@@ -72,7 +72,7 @@ abstract class MysqliV2
         string $login,
         string $password,
         string $database,
-        int $port = 3306
+        int $port = 3306,
     ): void {
         $this->masterInfo = [
             'server' => $masterIp,
@@ -106,7 +106,7 @@ abstract class MysqliV2
         string $login,
         string $password,
         string $database,
-        int $port = 3306
+        int $port = 3306,
     ): void {
         $this->isMaster = true;
         $this->openConnection($masterIp, $login, $password, $database, $port);
@@ -136,6 +136,7 @@ abstract class MysqliV2
         $this->initMaster();
         $prepare = $this->prepare($query);
         $this->executePrepareBool($prepare, $params);
+
         return $this->insertId();
 
     }
@@ -152,6 +153,7 @@ abstract class MysqliV2
         if ($result === false) {
             throw new DatabaseException();
         }
+
         return $this->insertId();
     }
 
@@ -166,6 +168,7 @@ abstract class MysqliV2
         if (is_bool($result)) {
             throw new DatabaseException();
         }
+
         return $result;
     }
 
