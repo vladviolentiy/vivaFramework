@@ -2,6 +2,8 @@
 
 namespace VladViolentiy\VivaFramework\Databases;
 
+use mysqli_result;
+use mysqli_stmt;
 use VladViolentiy\VivaFramework\Databases\Migrations\MysqliMigration;
 use VladViolentiy\VivaFramework\Exceptions\DatabaseException;
 use VladViolentiy\VivaFramework\Exceptions\MigrationException;
@@ -11,7 +13,13 @@ abstract class MysqliV2
     private \mysqli $db;
 
     /**
-     * @var array{server:non-empty-string,login:non-empty-string,password:non-empty-string,database:non-empty-string}
+     * @var array{
+     *     server:non-empty-string,
+     *     login:non-empty-string,
+     *     password:non-empty-string,
+     *     database:non-empty-string,
+     *     port:int<1,65535>
+     * }
      */
     protected array $masterInfo;
 
@@ -22,12 +30,13 @@ abstract class MysqliV2
      * @param non-empty-string $login
      * @param non-empty-string $password
      * @param non-empty-string $database
+     * @param int<1,65535> $port
      * @return void
      * @throws DatabaseException
      */
-    private function openConnection(string $masterIp, string $login, string $password, string $database): void
+    private function openConnection(string $masterIp, string $login, string $password, string $database, int $port = 3306): void
     {
-        $this->db = new \mysqli($masterIp, $login, $password, $database);
+        $this->db = new \mysqli($masterIp, $login, $password, $database, $port);
         if ($this->db->errno !== 0) {
             throw new DatabaseException();
         }
@@ -41,6 +50,7 @@ abstract class MysqliV2
                 $this->masterInfo['login'],
                 $this->masterInfo['password'],
                 $this->masterInfo['database'],
+                $this->masterInfo['port'],
             );
 
             $this->isMaster = true;
@@ -53,6 +63,7 @@ abstract class MysqliV2
      * @param non-empty-string $login
      * @param non-empty-string $password
      * @param non-empty-string $database
+     * @param int<1,65535> $port
      * @return void
      */
     protected function openMultiConnection(
@@ -61,12 +72,14 @@ abstract class MysqliV2
         string $login,
         string $password,
         string $database,
+        int $port = 3306
     ): void {
         $this->masterInfo = [
             'server' => $masterIp,
             'login' => $login,
             'password' => $password,
             'database' => $database,
+            'port' => $port,
         ];
 
         $server = $slaveIps[array_rand($slaveIps)];
@@ -84,6 +97,7 @@ abstract class MysqliV2
      * @param non-empty-string $login
      * @param non-empty-string $password
      * @param non-empty-string $database
+     * @param int<1,65535> $port
      * @return void
      * @throws DatabaseException
      */
@@ -92,18 +106,19 @@ abstract class MysqliV2
         string $login,
         string $password,
         string $database,
+        int $port = 3306
     ): void {
         $this->isMaster = true;
-        $this->openConnection($masterIp, $login, $password, $database);
+        $this->openConnection($masterIp, $login, $password, $database, $port);
     }
 
     /**
      * @param non-empty-string $query
      * @param non-empty-list<string|int|float|null> $params
-     * @return \mysqli_result<int,string|int|float|null>
+     * @return mysqli_result<int,string|int|float|null>
      * @throws DatabaseException
      */
-    final protected function executeQuery(string $query, array $params): \mysqli_result
+    final protected function executeQuery(string $query, array $params): mysqli_result
     {
         $prepare = $this->prepare($query);
 
@@ -113,55 +128,53 @@ abstract class MysqliV2
     /**
      * @param non-empty-string $query
      * @param non-empty-list<string|int|float|null> $params
-     * @return void
+     * @return int
      * @throws DatabaseException
      */
-    protected function executeQueryBool(string $query, array $params): void
+    protected function executeQueryBool(string $query, array $params): int
     {
         $this->initMaster();
         $prepare = $this->prepare($query);
         $this->executePrepareBool($prepare, $params);
+        return $this->insertId();
+
     }
 
     /**
      * @param non-empty-string $query
-     * @return void
+     * @return int
      * @throws DatabaseException
      */
-    protected function executeQueryBoolRaw(string $query): void
+    protected function executeQueryBoolRaw(string $query): int
     {
         $this->initMaster();
         $result = $this->db->query($query);
         if ($result === false) {
             throw new DatabaseException();
         }
+        return $this->insertId();
     }
 
     /**
      * @param non-empty-string $query
-     * @return \mysqli_result
+     * @return mysqli_result
      * @throws DatabaseException
      */
-    final protected function executeQueryRaw(string $query): \mysqli_result
+    final protected function executeQueryRaw(string $query): mysqli_result
     {
-        $prepare = $this->prepare($query);
-        if ($prepare->execute() === false) {
+        $result = $this->db->query($query);
+        if (is_bool($result)) {
             throw new DatabaseException();
         }
-        $result = $prepare->get_result();
-        if ($result === false) {
-            throw new DatabaseException();
-        }
-
         return $result;
     }
 
     /**
      * @param non-empty-string $query
-     * @return \mysqli_stmt
+     * @return mysqli_stmt
      * @throws DatabaseException
      */
-    final protected function prepare(string $query): \mysqli_stmt
+    final protected function prepare(string $query): mysqli_stmt
     {
         $pdo = $this->db->prepare($query);
         if ($pdo === false) {
@@ -172,12 +185,12 @@ abstract class MysqliV2
     }
 
     /**
-     * @param \mysqli_stmt $prepare
+     * @param mysqli_stmt $prepare
      * @param non-empty-list<string|int|float|null> $params
-     * @return \mysqli_result
+     * @return mysqli_result
      * @throws DatabaseException
      */
-    final protected function executePrepare(\mysqli_stmt $prepare, array $params): \mysqli_result
+    final protected function executePrepare(mysqli_stmt $prepare, array $params): mysqli_result
     {
         if ($prepare->execute($params) === false) {
             throw new DatabaseException();
@@ -191,21 +204,28 @@ abstract class MysqliV2
     }
 
     /**
-     * @param \mysqli_stmt $prepare
+     * @param mysqli_stmt $prepare
      * @param non-empty-list<string|int|float|null> $params
-     * @return void
+     * @return int
      * @throws DatabaseException
      */
-    final protected function executePrepareBool(\mysqli_stmt $prepare, array $params): void
+    final protected function executePrepareBool(mysqli_stmt $prepare, array $params): int
     {
         if ($prepare->execute($params) === false) {
             throw new DatabaseException();
         }
+
+        return $this->insertId();
     }
 
     final protected function insertId(): int
     {
         return (int) $this->db->insert_id;
+    }
+
+    final protected function affectedRows(): int
+    {
+        return (int) $this->db->affected_rows;
     }
 
     public function beginTransaction(): void
