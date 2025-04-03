@@ -164,8 +164,12 @@ abstract class MysqliV2
      */
     final protected function executeQueryRaw(string $query): mysqli_result
     {
-        $result = $this->db->query($query);
-        if (is_bool($result)) {
+        $prepare = $this->prepare($query);
+        if ($prepare->execute() === false) {
+            throw new DatabaseException();
+        }
+        $result = $prepare->get_result();
+        if ($result === false) {
             throw new DatabaseException();
         }
 
