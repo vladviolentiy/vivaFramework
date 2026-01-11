@@ -2,23 +2,49 @@
 
 namespace VladViolentiy\VivaFramework;
 
+use VladViolentiy\VivaFramework\Exceptions\ValidationException;
+
+/**
+ * @api
+ */
 abstract class Map
 {
     /**
-     * @param list<array<string,int|string|float>> $data
-     * @param non-empty-string $value
-     * @return array<int|float|string,array<string,int|string|float>>
+     * Transforms an array of associative arrays by using a specified key's value as the new key.
+     *
+     * @param list<array<non-empty-string, int|string|float|array<mixed>>> $data Input array of associative arrays
+     * @param non-empty-string $key The key whose value will become the new array key
+     * @return array<non-empty-string, array<string, int|string|float|array<mixed>>> Transformed array
      */
-    public static function valueAsKey(array $data, string $value): array
+    public static function valueAsKey(array $data, string $key): array
     {
-        $i = [];
+        $result = [];
+
         foreach ($data as $item) {
-            $element = $item[$value];
-            unset($item[$value]);
-            $i[$element] = $item;
+            // Extract the value that will become the new key
+            $newKey = $item[$key];
+
+            if (is_array($newKey)) {
+                throw new ValidationException('key cannot be an array');
+            }
+
+            // Convert numeric keys to strings to avoid potential issues
+            if (is_int($newKey) || is_float($newKey)) {
+                $newKey = (string) $newKey;
+            }
+
+            if (empty($newKey)) {
+                throw new ValidationException('key cannot be an empty');
+            }
+
+            // Remove the original key-value pair
+            unset($item[$key]);
+
+            // Assign to the result array
+            $result[$newKey] = $item;
         }
 
-        return $i;
+        return $result;
     }
 
     /**
@@ -49,7 +75,7 @@ abstract class Map
      */
     public static function toBoolValue(array $data, string $param): array
     {
-        return array_map(function ($item) use ($param) {
+        return array_map(static function ($item) use ($param) {
             $item[$param] = (bool) $item[$param];
 
             return $item;
